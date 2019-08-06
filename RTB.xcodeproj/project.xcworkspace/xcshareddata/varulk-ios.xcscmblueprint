@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "ACFB9AC5B50826A1A20CE2F08E37D56149BD0445",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "ACFB9AC5B50826A1A20CE2F08E37D56149BD0445" : 0,
+    "67E54965920AF641D5E30DCF95F9C194CF9CCAF4" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "84B82776-AC41-4E52-8097-5BF915A2C27A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "ACFB9AC5B50826A1A20CE2F08E37D56149BD0445" : "varulk-ios\/",
+    "67E54965920AF641D5E30DCF95F9C194CF9CCAF4" : "varulk\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "varulk-ios",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "varulk-ios.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:harrylundstrom\/varulk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "67E54965920AF641D5E30DCF95F9C194CF9CCAF4"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:harrylundstrom\/re2-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ACFB9AC5B50826A1A20CE2F08E37D56149BD0445"
+    }
+  ]
+}

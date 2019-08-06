@@ -1,0 +1,8 @@
+- New highscore server
+- Touches now work better when close to the edge of the screen 
+- Brighter enemy colors
+- Audio playback now respects the mute switch
+- Fixed bug where player would be invincible when picking up extralife after death
+- Player shot sound is now quieter
+- Review dialog request is made on startscreen (won't show in testflight build)
+- Haptic feedback when player is hit
