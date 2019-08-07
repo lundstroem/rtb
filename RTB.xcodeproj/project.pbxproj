@@ -25,6 +25,7 @@
 		03D708E0206F54F10000459B /* enemypang02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D8206F54F10000459B /* enemypang02.wav */; };
 		03D708E1206F54F10000459B /* pang.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D9206F54F10000459B /* pang.wav */; };
 		03D708E4206F5E770000459B /* RTAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D708E2206F5E770000459B /* RTAudioBuffer.m */; };
+		03D953B122FAEA0B00585913 /* RTBDemo1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D953B022FAEA0B00585913 /* RTBDemo1.swift */; };
 		03F2184822F0477400F2376C /* RTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2184722F0477400F2376C /* RTB.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		03D708D9206F54F10000459B /* pang.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pang.wav; path = res/pang.wav; sourceTree = "<group>"; };
 		03D708E2206F5E770000459B /* RTAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTAudioBuffer.m; path = "cengine-ios/RTAudioBuffer.m"; sourceTree = SOURCE_ROOT; };
 		03D708E3206F5E770000459B /* RTAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTAudioBuffer.h; path = "cengine-ios/RTAudioBuffer.h"; sourceTree = SOURCE_ROOT; };
+		03D953B022FAEA0B00585913 /* RTBDemo1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBDemo1.swift; sourceTree = "<group>"; };
 		03F2184622F0477400F2376C /* RTB-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTB-Bridging-Header.h"; sourceTree = "<group>"; };
 		03F2184722F0477400F2376C /* RTB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +124,7 @@
 				033ACAEE1B6188ED00DC8154 /* Supporting Files */,
 				03F2184722F0477400F2376C /* RTB.swift */,
 				03F2184622F0477400F2376C /* RTB-Bridging-Header.h */,
+				03D953B022FAEA0B00585913 /* RTBDemo1.swift */,
 			);
 			name = "vlk-ios";
 			path = "cengine-ios";
@@ -283,6 +286,7 @@
 				033ACAFB1B6188ED00DC8154 /* RTBViewController.m in Sources */,
 				033ACAF11B6188ED00DC8154 /* main.m in Sources */,
 				03F2184822F0477400F2376C /* RTB.swift in Sources */,
+				03D953B122FAEA0B00585913 /* RTBDemo1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

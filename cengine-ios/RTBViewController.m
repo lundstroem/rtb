@@ -17,9 +17,17 @@ static RTBViewController *gameViewController = NULL;
 @property (strong) UIImpactFeedbackGenerator *impactFeedbackGeneratorMedium;
 @property (strong) UIImpactFeedbackGenerator *impactFeedbackGeneratorLight;
 @property (strong) RTB *rtb;
-@property (strong) Input *input;
 @property (strong) NSArray<NSNumber *> *rasterObjC;
 @property (strong) NSArray<NSNumber *> *audioBufferObjC;
+
+// input
+@property (nonatomic) int inputX;
+@property (nonatomic) int inputY;
+@property (nonatomic) BOOL inputActive;
+@property (nonatomic) BOOL inputBegan;
+@property (nonatomic) BOOL inputBeganLock;
+@property (nonatomic) BOOL inputEnded;
+@property (nonatomic) BOOL inputEndedLock;
 
 @end
 
@@ -29,7 +37,6 @@ static RTBViewController *gameViewController = NULL;
 @synthesize context = _context;
 @synthesize active_touches;
 
-//struct VLK_input *input = NULL;
 static const double screen_scaling_factor = 1.6;
 static const double screen_scaling_factor_reverse = 0.625;
 static const double screen_16_9_width_factor = 0.5625;
@@ -242,8 +249,7 @@ OSStatus renderCallback(void *userData,
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     gameViewController = self;
-    self.rtb = [[RTB alloc] init];
-    self.input = [Input new];
+    self.rtb = [RTB instance];
 
     [self initInput];
     [self initVideo];
@@ -408,11 +414,40 @@ OSStatus renderCallback(void *userData,
         prefillSize = 0;
     }
 
+    BOOL inputBegan = NO;
+    if(self.inputBegan && !self.inputBeganLock) {
+        self.inputActive = YES;
+        self.inputEnded = NO;
+        self.inputEndedLock = NO;
+        inputBegan = YES;
+    }
+
+    BOOL inputEnded = NO;
+    if(self.inputEnded && !self.inputEndedLock) {
+        inputEnded = YES;
+    }
+
     NSArray<NSNumber *> *r = [self.rtb updateWithDeltaTime:ms_dt
                                                 rasterSize:rasterSize
-                                           audioBufferSize:prefillSize];
+                                           audioBufferSize:prefillSize
+                                              inputUpdated:self.inputActive
+                                                    inputX:self.inputX
+                                                    inputY:self.inputY
+                                                inputBegan:inputBegan
+                                                inputEnded:inputEnded];
     self.rasterObjC = r;
+
     isPrefilled = true;
+    if(self.inputBegan && !self.inputBeganLock) {
+        self.inputBeganLock = YES;
+    }
+
+    if(self.inputEnded && !self.inputEndedLock) {
+        self.inputEndedLock = YES;
+        self.inputBegan = NO;
+        self.inputBeganLock = NO;
+        self.inputActive = NO;
+    }
 
     pthread_mutex_unlock(&mutex);
 }
@@ -467,14 +502,15 @@ void cSynthBuildSineWave(int16_t *data, int wave_length) {
     int t_x = floor(pt.x * (visibleTexWidth * screen_scaling_factor));
     int t_y = floor(pt.y * (visibleTexHeight * screen_scaling_factor));
     
-    [self.rtb updateInputCoordinatesWithX:t_x y:t_y];
+    self.inputX = t_x;
+    self.inputY = t_y;
 }
 
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     for (UITouch *touch in touches) {
         [self updateTouch:touch];
     }
-    [self.rtb updateInputStateWithBegan:YES ended:NO];
+    self.inputBegan = YES;
 }
 
 - (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
@@ -487,7 +523,7 @@ void cSynthBuildSineWave(int16_t *data, int wave_length) {
     for (UITouch *touch in touches) {
         [self updateTouch:touch];
     }
-    [self.rtb updateInputStateWithBegan:NO ended:YES];
+    self.inputEnded = YES;
 }
 
 /*
