@@ -391,9 +391,11 @@ OSStatus renderCallback(void *userData,
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
+/*
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
+*/
 
 #pragma mark - GLKViewDelegate
 

@@ -229,10 +229,9 @@
 			};
 			buildConfigurationList = 033ACAE61B6188ED00DC8154 /* Build configuration list for PBXProject "RTB" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
