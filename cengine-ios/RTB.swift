@@ -20,35 +20,48 @@ protocol RTBProtocol {
                 inputEnded: Bool) -> [UInt32]
 }
 
-public class RTB: NSObject, RTBProtocol {
+public class RTBBufferContainer {
+    var screenBuffer: [UInt32]?
+    var audioBuffer: [Int16]?
+}
+
+public class RTB: NSObject {
     let width: Int = 180
     let height: Int = 320
     let pixelCount: Int = 57600
 
     var raster: [UInt32] = Array(repeating: 0, count: 57600)
-
+    //var bufferContainer: RTBBufferContainer
+    
     @objc static func instance() -> RTB {
         return RTBDemo1()
     }
 
+    //initWithBufferSizes {
+    // TODO
+    //}
+    
     override init() {
         super.init()
     }
+}
 
-    // RTBProtocol
+// MARK: - RTBProtocol
 
-    func create() {
+extension RTB: RTBProtocol {
+
+    @objc func create() {
         assert(true, "should only be run in subclass")
     }
-
+    
     @objc func update(deltaTime: Double,
-                rasterSize: Int,
-                audioBufferSize: Int,
-                inputUpdated: Bool,
-                inputX: Int,
-                inputY: Int,
-                inputBegan: Bool,
-                inputEnded: Bool) -> [UInt32] {
+                      rasterSize: Int,
+                      audioBufferSize: Int,
+                      inputUpdated: Bool,
+                      inputX: Int,
+                      inputY: Int,
+                      inputBegan: Bool,
+                      inputEnded: Bool) -> [UInt32] {
         assert(true, "should only be run in subclass")
         let raster: [UInt32] = Array(repeating: 0, count: 57600)
         return raster
