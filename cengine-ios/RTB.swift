@@ -19,18 +19,19 @@ protocol RTBProtocol {
                 inputBegan: Bool,
                 inputEnded: Bool) -> [UInt32]
 }
-
+/*
 public class RTBBufferContainer {
     var screenBuffer: [UInt32]?
     var audioBuffer: [Int16]?
 }
-
+*/
 public class RTB: NSObject {
     let width: Int = 180
     let height: Int = 320
     let pixelCount: Int = 57600
 
     var raster: [UInt32] = Array(repeating: 0, count: 57600)
+    var audioBuffer: [Int16] = Array(repeating: 0, count: 57600)
     //var bufferContainer: RTBBufferContainer
     
     @objc static func instance() -> RTB {

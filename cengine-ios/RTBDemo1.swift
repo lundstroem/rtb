@@ -9,6 +9,9 @@
 import Foundation
 
 class RTBDemo1: RTB {
+    
+    var inputActive = false
+    
     override func create() {
     }
 
@@ -23,6 +26,10 @@ class RTBDemo1: RTB {
          /*for index in 0...rasterSize-1 {
             raster[index] = 0x0000ffff
          }*/
+        if inputBegan {
+            
+        }
+        
         let pixel = inputX + inputY * width
 
         if inputBegan && pixel < pixelCount {

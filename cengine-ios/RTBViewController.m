@@ -64,7 +64,7 @@ SInt16 *audioBuffer = NULL;
 int audioBufferMax = 4096;
 int rasterSize = 57600;
 int samplesToWrite = 0;
-bool isPrefilled = false;
+//bool isPrefilled = false;
 bool shouldPrefill = false;
 int16_t *sine_wave_table;
 int sine_wave_table_size = 1024;
@@ -121,21 +121,22 @@ OSStatus renderCallback(void *userData,
         pthread_mutex_unlock(&mutex);
         return noErr;
     }
-
+/*
     if(!isPrefilled) {
         printf("AudioCallback: buffer is not prefilled.\n");
         pthread_mutex_unlock(&mutex);
         return noErr;
     }
-
+*/
     // write samples
     for(int i = 0; i < totalFrames; i += 2) {
-        //int16_t sample = 0; audioBuffer[i];
         double amp = 0.3;
-        inputFrames[i] += audioBuffer[i] * amp;
-        inputFrames[i+1] += audioBuffer[i+1] * amp;
+        inputFrames[i] = (rand() % INT16_MAX) -(INT16_MAX/2);
+        inputFrames[i+1] = (rand() % INT16_MAX) -(INT16_MAX/2);
+        //inputFrames[i] += audioBuffer[i] * amp;
+        //inputFrames[i+1] += audioBuffer[i+1] * amp;
     }
-    isPrefilled = false;
+    //isPrefilled = false;
     shouldPrefill = true;
 
     pthread_mutex_unlock(&mutex);
@@ -439,7 +440,7 @@ OSStatus renderCallback(void *userData,
                                                 inputEnded:inputEnded];
     self.rasterObjC = r;
 
-    isPrefilled = true;
+    //isPrefilled = true;
     if(self.inputBegan && !self.inputBeganLock) {
         self.inputBeganLock = YES;
     }
