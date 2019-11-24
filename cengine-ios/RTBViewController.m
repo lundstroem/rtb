@@ -45,23 +45,21 @@ static const double screen_16_9_width_factor = 0.5625;
 
 GLuint nID;
 
-int tex16_9 = 180;
-int texWidth = 512;
-int texHeight = 512;
-int visibleTexWidth = 180;
-int visibleTexHeight = 320;
+static int tex16_9 = 180;
+static int texWidth = 512;
+static int texHeight = 512;
+static int visibleTexWidth = 180;
+static int visibleTexHeight = 320;
 
-GLubyte *textureData;
-CGFloat x = 0;
-CGFloat y = 0;
-CGFloat w = 0;
-CGFloat h = 0;
-CGFloat visible_w = 0;
-CGFloat visible_h = 0;
-CGFloat screenWidth = 0;
-CGFloat screenHeight = 0;
-
-SInt16 *audioBuffer = NULL;
+static GLubyte *textureData;
+static CGFloat x = 0;
+static CGFloat y = 0;
+static CGFloat w = 0;
+static CGFloat h = 0;
+static CGFloat visible_w = 0;
+static CGFloat visible_h = 0;
+static CGFloat screenWidth = 0;
+static CGFloat screenHeight = 0;
 
 int audioBufferMax = 8192;
 int rasterSize = 57600;
@@ -143,7 +141,6 @@ OSStatus renderCallback(void *userData,
 }
 
 - (void)tearDown {
-    free(audioBuffer);
     pthread_mutex_unlock(&mutex);
 }
 
@@ -246,25 +243,6 @@ OSStatus renderCallback(void *userData,
     if(!self.context) {
         NSLog(@"Failed to create ES context");
     }
-
-    // TODO: account for portrait/landscape
-    NSMutableArray<NSNumber *> *array = [[NSMutableArray alloc] init];
-    for(int r = 0; r < 180 * 320; r++) {
-        [array addObject:[NSNumber numberWithUnsignedInteger:0]];
-    }
-    self.rasterObjC = [array copy];
-
-    // TODO: If not used later..
-    audioBuffer = (SInt16 *)malloc(audioBufferMax * sizeof(SInt16));
-    for(int r = 0; r < audioBufferMax; r++) {
-        audioBuffer[r] = 0;
-    }
-
-    array = [[NSMutableArray alloc] init];
-    for(int r = 0; r < audioBufferMax; r++) {
-        [array addObject:[NSNumber numberWithInteger:0]];
-    }
-    self.audioBufferObjC = [array copy];
 
     sine_wave_table = malloc(sizeof(int16_t) * sine_wave_table_size);
     cSynthBuildSineWave(sine_wave_table, sine_wave_table_size);
@@ -405,7 +383,7 @@ void updateAudio(int size) {
 
     NSArray<NSNumber *> *r = [self.rtb updateWithDeltaTime:ms_dt
                                                 rasterSize:rasterSize
-                                              inputUpdated:self.inputActive
+                                               inputActive:self.inputActive
                                                     inputX:self.inputX
                                                     inputY:self.inputY
                                                 inputBegan:inputBegan
