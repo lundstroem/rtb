@@ -41,6 +41,8 @@ static const double screen_scaling_factor = 1.6;
 static const double screen_scaling_factor_reverse = 0.625;
 static const double screen_16_9_width_factor = 0.5625;
 
+// TODO: Put variables as static or in struct.
+
 GLuint nID;
 
 int tex16_9 = 180;
@@ -61,11 +63,9 @@ CGFloat screenHeight = 0;
 
 SInt16 *audioBuffer = NULL;
 
-int audioBufferMax = 4096;
+int audioBufferMax = 8192;
 int rasterSize = 57600;
-int samplesToWrite = 0;
-//bool isPrefilled = false;
-bool shouldPrefill = false;
+
 int16_t *sine_wave_table;
 int sine_wave_table_size = 1024;
 double sine_wave_table_cursor = 0;
@@ -99,7 +99,7 @@ OSStatus renderCallback(void *userData,
     int totalFrames = numFrames * 2;
 
     // zero the buffer
-    for(int i = 0; i < totalFrames; i++) {
+    for (int i = 0; i < totalFrames; i++) {
         inputFrames[i] = 0;
     }
 
@@ -109,53 +109,29 @@ OSStatus renderCallback(void *userData,
     // Try to keep the work inside the locks to an absolute minimum to prevent stalling.
     pthread_mutex_lock(&mutex);
 
-    samplesToWrite = totalFrames;
-
-    if(sound_enabled == 0) {
+    if (sound_enabled == 0) {
         pthread_mutex_unlock(&mutex);
         return noErr;
     }
 
-    if(totalFrames > audioBufferMax) {
+    if (totalFrames > audioBufferMax) {
         printf("AudioCallback: totalFrames too big.\n");
         pthread_mutex_unlock(&mutex);
         return noErr;
     }
-/*
-    if(!isPrefilled) {
-        printf("AudioCallback: buffer is not prefilled.\n");
-        pthread_mutex_unlock(&mutex);
-        return noErr;
-    }
-*/
+
+    updateAudio(totalFrames);
+
     // write samples
-    for(int i = 0; i < totalFrames; i += 2) {
+    for (int i = 0; i < totalFrames; i += 2) {
         double amp = 0.3;
-        inputFrames[i] = (rand() % INT16_MAX) -(INT16_MAX/2);
-        inputFrames[i+1] = (rand() % INT16_MAX) -(INT16_MAX/2);
-        //inputFrames[i] += audioBuffer[i] * amp;
-        //inputFrames[i+1] += audioBuffer[i+1] * amp;
+        inputFrames[i] = [[gameViewController.audioBufferObjC objectAtIndex:i] intValue] * amp;
+        inputFrames[i+1] = [[gameViewController.audioBufferObjC objectAtIndex:i+1] intValue] * amp;
     }
-    //isPrefilled = false;
-    shouldPrefill = true;
 
     pthread_mutex_unlock(&mutex);
     return noErr;
 }
-
-/*
- 
- iOS makes a callback with a buffer and length to be filled.
- Once a latency is set, buffer size should remain fairly constant?
- 
- suggestion 1: prefill from main thread?
-    - first time audioCallback is made, write 0 and store size of buffer.
-    - next, prefill buffer of size in main with stored size.
-    - in audiocallback write from prefilled buffer of size. If sizes do not match, re-store size to fill
-      and report error.
-    - every time audiocallback has been made, prefill the buffer to be ready for next time.
- 
- */
 
 + (RTBViewController *)sharedInstance {
     return gameViewController;
@@ -278,6 +254,7 @@ OSStatus renderCallback(void *userData,
     }
     self.rasterObjC = [array copy];
 
+    // TODO: If not used later..
     audioBuffer = (SInt16 *)malloc(audioBufferMax * sizeof(SInt16));
     for(int r = 0; r < audioBufferMax; r++) {
         audioBuffer[r] = 0;
@@ -392,12 +369,6 @@ OSStatus renderCallback(void *userData,
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-/*
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
-*/
-
 #pragma mark - GLKViewDelegate
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
@@ -408,14 +379,16 @@ OSStatus renderCallback(void *userData,
     [self drawTexture];
 }
 
+void updateAudio(int size) {
+    if (gameViewController != NULL) {
+        NSArray<NSNumber *> *r = [gameViewController.rtb updateAudioWithBufferSize:size];
+        gameViewController.audioBufferObjC = r;
+    }
+}
+
 - (void)update {
     double ms_dt = self.timeSinceLastUpdate * 1000;
     pthread_mutex_lock(&mutex);
-    
-    int prefillSize = samplesToWrite;
-    if (!shouldPrefill) {
-        prefillSize = 0;
-    }
 
     BOOL inputBegan = NO;
     if(self.inputBegan && !self.inputBeganLock) {
@@ -432,7 +405,6 @@ OSStatus renderCallback(void *userData,
 
     NSArray<NSNumber *> *r = [self.rtb updateWithDeltaTime:ms_dt
                                                 rasterSize:rasterSize
-                                           audioBufferSize:prefillSize
                                               inputUpdated:self.inputActive
                                                     inputX:self.inputX
                                                     inputY:self.inputY
@@ -440,7 +412,6 @@ OSStatus renderCallback(void *userData,
                                                 inputEnded:inputEnded];
     self.rasterObjC = r;
 
-    //isPrefilled = true;
     if(self.inputBegan && !self.inputBeganLock) {
         self.inputBeganLock = YES;
     }
@@ -455,32 +426,7 @@ OSStatus renderCallback(void *userData,
     pthread_mutex_unlock(&mutex);
 }
 
-// Make as a protocol, usable in swift?
-- (void)update:(double)deltaTime
-        raster:(unsigned int *)raster
-   audioBuffer:(SInt16 *)audioBuffer
-   prefillSize:(int)prefillSize {
-
-    // TODO: Write test data and sinus to audioBuffer.
-    for(int i = 0; i < prefillSize; i++) {
-        audioBuffer[i] = 0;
-    }
-
-    for(int i = 0; i < prefillSize; i += 2) {
-        //int16_t sample = 0; audioBuffer[i];
-        double amp = 1.0;
-        audioBuffer[i] += sine_wave_table[(int)sine_wave_table_cursor] * amp;
-        audioBuffer[i+1] += /*(rand() % INT16_MAX) -INT16_MAX/2*/0;
-
-        sine_wave_table_cursor += 10;
-        if(sine_wave_table_cursor >= sine_wave_table_size) {
-            sine_wave_table_cursor -= sine_wave_table_size;
-        }
-    }
-}
-
 void cSynthBuildSineWave(int16_t *data, int wave_length) {
-    
     double pi = 3.14159265358979323846;
     double phaseIncrement = (2.0f * pi)/(double)wave_length;
     double currentPhase = 0.0;
