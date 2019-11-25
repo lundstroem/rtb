@@ -27,7 +27,7 @@ public class RTB: NSObject {
     var audioBuffer: [Int16] = Array(repeating: 0, count: 8192)
 
     @objc static func instance() -> RTB {
-        return RTBDemo1()
+        return RTBDemo2()
     }
 
     override init() {

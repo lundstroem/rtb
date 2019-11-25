@@ -43,7 +43,7 @@ static const double screen_16_9_width_factor = 0.5625;
 
 // TODO: Put variables as static or in struct.
 
-GLuint nID;
+static GLuint nID;
 
 static int tex16_9 = 180;
 static int texWidth = 512;
@@ -56,17 +56,13 @@ static CGFloat x = 0;
 static CGFloat y = 0;
 static CGFloat w = 0;
 static CGFloat h = 0;
-static CGFloat visible_w = 0;
-static CGFloat visible_h = 0;
+//static CGFloat visible_w = 0;
+//static CGFloat visible_h = 0;
 static CGFloat screenWidth = 0;
 static CGFloat screenHeight = 0;
 
 int audioBufferMax = 8192;
 int rasterSize = 57600;
-
-int16_t *sine_wave_table;
-int sine_wave_table_size = 1024;
-double sine_wave_table_cursor = 0;
 
 typedef struct {
     GLKVector2 geometryVertex;
@@ -244,9 +240,6 @@ OSStatus renderCallback(void *userData,
         NSLog(@"Failed to create ES context");
     }
 
-    sine_wave_table = malloc(sizeof(int16_t) * sine_wave_table_size);
-    cSynthBuildSineWave(sine_wave_table, sine_wave_table_size);
-
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     [EAGLContext setCurrentContext:self.context];
@@ -260,6 +253,11 @@ OSStatus renderCallback(void *userData,
     NSLog(@"screen w:%f h:%f", screenWidth, screenHeight);
 
     CGFloat size = screenHeight;
+    if(landscape == 1) {
+        size = screenWidth;
+        visibleTexHeight = tex16_9;
+        visibleTexWidth = texWidth;
+    }
 
     // iPhone X
     if(size == 812) {
@@ -272,8 +270,8 @@ OSStatus renderCallback(void *userData,
         h *= screen_scaling_factor;
     }
 
-    visible_w = w;
-    visible_h = h;
+    //visible_w = w;
+    //visible_h = h;
 
     [self calculateInsets];
 
@@ -281,13 +279,113 @@ OSStatus renderCallback(void *userData,
     self.effect.transform.projectionMatrix = projectionMatrix;
 }
 
+/*
+ - (void) initVideo {
+
+     self.preferredFramesPerSecond = TARGET_FPS;
+     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+     if(!self.context) {
+         NSLog(@"Failed to create ES context");
+     }
+
+     GLKView *view = (GLKView *)self.view;
+     view.context = self.context;
+     [EAGLContext setCurrentContext:self.context];
+
+     self.effect = [[GLKBaseEffect alloc] init];
+
+     CGRect screenRect = [[UIScreen mainScreen] bounds];
+     CGFloat screenWidth = screenRect.size.width;
+     CGFloat screenHeight = screenRect.size.height;
+
+     NSLog(@"screen w:%f h:%f", screenWidth, screenHeight);
+
+     CGFloat size = screenHeight;
+     if(landscape == 1){
+         size = screenWidth;
+         visibleTexHeight = tex16_9;
+         visibleTexWidth = texWidth;
+     }
+
+     //
+     if(size == 2048) {
+         w = 2048;
+         h = 2048;
+     }
+
+     // iPad, iPad2, iPad Air, iPad Mini Retina, iPad Mini //768
+     else if(size == 1024) {
+         w = 1024;
+         h = 1024;
+     }
+
+     // iPhone 4 //320
+     else if(size == 480) {
+         w = 512;
+         h = 512;
+     }
+
+     // iPhone 5
+     else if(size == 568) {
+         w = 512;
+         h = 512;
+     }
+
+     // iPhone 6
+     else if(size == 667) {
+         w = 640;
+         h = 640;
+     }
+
+     // iPhone 6+
+     else if(size == 736) {
+         w = 725.299;
+         h = 725.299;
+     }
+
+     else {
+         // no supported resolution, just fill up and disregard scaling artifacts.
+         w = screenHeight;
+         h = screenHeight;
+     }
+
+     int x_offset = (screenWidth - (w * 0.5625)) / 2;
+     x = x_offset;
+     int y_offset = (screenHeight - h) / 2;
+     y = y_offset;
+
+     if(landscape == 1) {
+         int x_offset = (screenWidth - w) / 2;
+         x = x_offset;
+         int y_offset = (screenHeight - (h * 0.5625)) / 2;
+         y = y_offset;
+     }
+
+     // prevent screen disappearing upwards as is the case with 4S. In landscape, this would probably be better to disable.
+     if(landscape == 0) {
+         if(y < 0) {
+             y = 0;
+         }
+     }
+
+     GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, screenWidth, screenHeight, 0, 0, 1);
+     self.effect.transform.projectionMatrix = projectionMatrix;
+ }
+*/
+
 - (void)calculateInsets {
-    visible_w = w * screen_scaling_factor_reverse;
-    visible_h = h * screen_scaling_factor_reverse;
+    CGFloat visible_w = w * screen_scaling_factor_reverse;
+    CGFloat visible_h = h * screen_scaling_factor_reverse;
     int x_offset = (screenWidth - (visible_w * screen_16_9_width_factor)) / 2;
     x = x_offset;
     int y_offset = (screenHeight - visible_h) / 2;
     y = y_offset;
+    if(landscape == 1) {
+        int x_offset = (screenWidth - visible_w) / 2;
+        x = x_offset;
+        int y_offset = (screenHeight - (visible_h * screen_16_9_width_factor)) / 2;
+        y = y_offset;
+    }
 }
 
 - (void)initInput {
@@ -402,17 +500,6 @@ void updateAudio(int size) {
     }
 
     pthread_mutex_unlock(&mutex);
-}
-
-void cSynthBuildSineWave(int16_t *data, int wave_length) {
-    double pi = 3.14159265358979323846;
-    double phaseIncrement = (2.0f * pi)/(double)wave_length;
-    double currentPhase = 0.0;
-    for(int i = 0; i < wave_length; i++) {
-        int sample = (int)(sin(currentPhase) * INT16_MAX);
-        data[i] = (int16_t)sample;
-        currentPhase += phaseIncrement;
-    }
 }
 
 - (void)updateTouch:(UITouch *)touch {

@@ -17,17 +17,7 @@ class RTBDemo1: RTB {
     var phaseIncrement: Double = 0
     var currentPhase: Double = 0
     var currentPhaseInt: Int = 0
-    
-    func incrementOsc() {
-        phaseIncrement = yInput * 0.1
-        currentPhase += phaseIncrement
-        currentPhaseInt = Int(currentPhase)
-        if currentPhaseInt >= 1024 {
-            currentPhaseInt = 0
-            currentPhase = 0
-        }
-    }
-    
+
     override init() {
         super.init()
     }
@@ -46,7 +36,6 @@ class RTBDemo1: RTB {
             if sample > INT16_MAX {
                 sample = Int16(INT16_MAX)
             }
-            print(currentPhaseInt)
 
             audioBuffer[n+1] = sample
             incrementOsc()
@@ -55,12 +44,12 @@ class RTBDemo1: RTB {
     }
 
     override func update(deltaTime: Double,
-                rasterSize: Int,
-                inputActive: Bool,
-                inputX: Int,
-                inputY: Int,
-                inputBegan: Bool,
-                inputEnded: Bool) -> [UInt32] {
+                         rasterSize: Int,
+                         inputActive: Bool,
+                         inputX: Int,
+                         inputY: Int,
+                         inputBegan: Bool,
+                         inputEnded: Bool) -> [UInt32] {
         
         yInput = Double(inputY)
         
@@ -74,6 +63,17 @@ class RTBDemo1: RTB {
 }
 
 extension RTBDemo1 {
+
+    func incrementOsc() {
+        phaseIncrement = yInput * 0.1
+        currentPhase += phaseIncrement
+        currentPhaseInt = Int(currentPhase)
+        if currentPhaseInt >= 1024 {
+            currentPhaseInt = 0
+            currentPhase = 0
+        }
+    }
+
     func buildSineTable(size: Int) -> [Int16] {
         var table: [Int16] = Array(repeating: 0, count: size)
         let phaseIncrement: Double = (2 * Double.pi) / Double(size)
@@ -85,15 +85,4 @@ extension RTBDemo1 {
         }
         return table
     }
-    /*
-    void cSynthBuildSineWave(int16_t *data, int wave_length) {
-        double pi = 3.14159265358979323846;
-        double phaseIncrement = (2.0f * pi)/(double)wave_length;
-        double currentPhase = 0.0;
-        for(int i = 0; i < wave_length; i++) {
-            int sample = (int)(sin(currentPhase) * INT16_MAX);
-            data[i] = (int16_t)sample;
-            currentPhase += phaseIncrement;
-        }
-    }*/
 }

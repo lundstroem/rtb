@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03252014238C697700FD63CF /* RTBDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03252013238C697700FD63CF /* RTBDemo2.swift */; };
+		03252016238C6BAF00FD63CF /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03252015238C6BAF00FD63CF /* todo.txt */; };
 		033ACAF11B6188ED00DC8154 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 033ACAF01B6188ED00DC8154 /* main.m */; };
 		033ACAF41B6188ED00DC8154 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 033ACAF31B6188ED00DC8154 /* AppDelegate.m */; };
 		033ACAF61B6188ED00DC8154 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 033ACAF51B6188ED00DC8154 /* Shader.fsh */; };
@@ -15,15 +17,6 @@
 		033ACAFE1B6188ED00DC8154 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033ACAFC1B6188ED00DC8154 /* Main.storyboard */; };
 		033ACB001B6188ED00DC8154 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033ACAFF1B6188ED00DC8154 /* Images.xcassets */; };
 		033ACB031B6188ED00DC8154 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033ACB011B6188ED00DC8154 /* LaunchScreen.xib */; };
-		037A136D20702ED300F272CE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037A136C20702ED300F272CE /* GameKit.framework */; };
-		03D708DA206F54F10000459B /* powerup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D2206F54F00000459B /* powerup.wav */; };
-		03D708DB206F54F10000459B /* trains.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D3206F54F00000459B /* trains.wav */; };
-		03D708DC206F54F10000459B /* playerdeath.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D4206F54F00000459B /* playerdeath.wav */; };
-		03D708DD206F54F10000459B /* hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D5206F54F00000459B /* hit.wav */; };
-		03D708DE206F54F10000459B /* gold.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D6206F54F10000459B /* gold.wav */; };
-		03D708DF206F54F10000459B /* logo.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D7206F54F10000459B /* logo.wav */; };
-		03D708E0206F54F10000459B /* enemypang02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D8206F54F10000459B /* enemypang02.wav */; };
-		03D708E1206F54F10000459B /* pang.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03D708D9206F54F10000459B /* pang.wav */; };
 		03D708E4206F5E770000459B /* RTAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D708E2206F5E770000459B /* RTAudioBuffer.m */; };
 		03D953B122FAEA0B00585913 /* RTBDemo1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D953B022FAEA0B00585913 /* RTBDemo1.swift */; };
 		03F2184822F0477400F2376C /* RTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2184722F0477400F2376C /* RTB.swift */; };
@@ -40,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03252013238C697700FD63CF /* RTBDemo2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBDemo2.swift; sourceTree = "<group>"; };
+		03252015238C6BAF00FD63CF /* todo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		033ACAEB1B6188ED00DC8154 /* RTB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RTB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		033ACAEF1B6188ED00DC8154 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		033ACAF01B6188ED00DC8154 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -53,15 +48,6 @@
 		033ACAFF1B6188ED00DC8154 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		033ACB021B6188ED00DC8154 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		033ACB081B6188ED00DC8154 /* RTB.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTB.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		037A136C20702ED300F272CE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		03D708D2206F54F00000459B /* powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = powerup.wav; path = res/powerup.wav; sourceTree = "<group>"; };
-		03D708D3206F54F00000459B /* trains.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = trains.wav; path = res/trains.wav; sourceTree = "<group>"; };
-		03D708D4206F54F00000459B /* playerdeath.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = playerdeath.wav; path = res/playerdeath.wav; sourceTree = "<group>"; };
-		03D708D5206F54F00000459B /* hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = hit.wav; path = res/hit.wav; sourceTree = "<group>"; };
-		03D708D6206F54F10000459B /* gold.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = gold.wav; path = res/gold.wav; sourceTree = "<group>"; };
-		03D708D7206F54F10000459B /* logo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = logo.wav; path = res/logo.wav; sourceTree = "<group>"; };
-		03D708D8206F54F10000459B /* enemypang02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = enemypang02.wav; path = res/enemypang02.wav; sourceTree = "<group>"; };
-		03D708D9206F54F10000459B /* pang.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pang.wav; path = res/pang.wav; sourceTree = "<group>"; };
 		03D708E2206F5E770000459B /* RTAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTAudioBuffer.m; path = "cengine-ios/RTAudioBuffer.m"; sourceTree = SOURCE_ROOT; };
 		03D708E3206F5E770000459B /* RTAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTAudioBuffer.h; path = "cengine-ios/RTAudioBuffer.h"; sourceTree = SOURCE_ROOT; };
 		03D953B022FAEA0B00585913 /* RTBDemo1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBDemo1.swift; sourceTree = "<group>"; };
@@ -74,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				037A136D20702ED300F272CE /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +78,6 @@
 			children = (
 				033ACAED1B6188ED00DC8154 /* vlk-ios */,
 				033ACAEC1B6188ED00DC8154 /* Products */,
-				0341A24D1B6390D900D3E264 /* res */,
 				037A136B20702ED300F272CE /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -125,6 +109,8 @@
 				03F2184722F0477400F2376C /* RTB.swift */,
 				03F2184622F0477400F2376C /* RTB-Bridging-Header.h */,
 				03D953B022FAEA0B00585913 /* RTBDemo1.swift */,
+				03252013238C697700FD63CF /* RTBDemo2.swift */,
+				03252015238C6BAF00FD63CF /* todo.txt */,
 			);
 			name = "vlk-ios";
 			path = "cengine-ios";
@@ -139,26 +125,9 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		0341A24D1B6390D900D3E264 /* res */ = {
-			isa = PBXGroup;
-			children = (
-				03D708D8206F54F10000459B /* enemypang02.wav */,
-				03D708D6206F54F10000459B /* gold.wav */,
-				03D708D5206F54F00000459B /* hit.wav */,
-				03D708D7206F54F10000459B /* logo.wav */,
-				03D708D9206F54F10000459B /* pang.wav */,
-				03D708D4206F54F00000459B /* playerdeath.wav */,
-				03D708D2206F54F00000459B /* powerup.wav */,
-				03D708D3206F54F00000459B /* trains.wav */,
-			);
-			name = res;
-			path = "cengine-ios";
-			sourceTree = "<group>";
-		};
 		037A136B20702ED300F272CE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				037A136C20702ED300F272CE /* GameKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -251,19 +220,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03D708E1206F54F10000459B /* pang.wav in Resources */,
-				03D708DA206F54F10000459B /* powerup.wav in Resources */,
 				033ACB031B6188ED00DC8154 /* LaunchScreen.xib in Resources */,
-				03D708DD206F54F10000459B /* hit.wav in Resources */,
 				033ACAFE1B6188ED00DC8154 /* Main.storyboard in Resources */,
 				033ACB001B6188ED00DC8154 /* Images.xcassets in Resources */,
-				03D708DE206F54F10000459B /* gold.wav in Resources */,
+				03252016238C6BAF00FD63CF /* todo.txt in Resources */,
 				033ACAF81B6188ED00DC8154 /* Shader.vsh in Resources */,
 				033ACAF61B6188ED00DC8154 /* Shader.fsh in Resources */,
-				03D708DF206F54F10000459B /* logo.wav in Resources */,
-				03D708DB206F54F10000459B /* trains.wav in Resources */,
-				03D708E0206F54F10000459B /* enemypang02.wav in Resources */,
-				03D708DC206F54F10000459B /* playerdeath.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03252014238C697700FD63CF /* RTBDemo2.swift in Sources */,
 				03D708E4206F5E770000459B /* RTAudioBuffer.m in Sources */,
 				033ACAF41B6188ED00DC8154 /* AppDelegate.m in Sources */,
 				033ACAFB1B6188ED00DC8154 /* RTBViewController.m in Sources */,
