@@ -49,6 +49,7 @@ static int tex16_9 = 180;
 static int texWidth = 512;
 static int texHeight = 512;
 static int visibleTexWidth = 180;
+static int visibleTexWidthLandscape = 320;
 static int visibleTexHeight = 320;
 
 static GLubyte *textureData;
@@ -80,7 +81,7 @@ int sound_enabled = 1;
 
 #define MAX_TOUCHES 1
 #define TARGET_FPS 60
-#define landscape 0
+#define landscape 1
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 OSStatus renderCallback(void *userData,
@@ -127,6 +128,22 @@ OSStatus renderCallback(void *userData,
     return noErr;
 }
 
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if (landscape == 0) {
+        return (UIInterfaceOrientationPortrait | UIInterfaceOrientationPortraitUpsideDown);
+    } else {
+        return (UIInterfaceOrientationLandscapeLeft | UIInterfaceOrientationLandscapeRight);
+    }
+}
+/*
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+*/
 + (RTBViewController *)sharedInstance {
     return gameViewController;
 }
@@ -219,7 +236,6 @@ OSStatus renderCallback(void *userData,
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     gameViewController = self;
-    self.rtb = [RTB instance];
 
     [self initInput];
     [self initVideo];
@@ -227,6 +243,8 @@ OSStatus renderCallback(void *userData,
 
     [self addObservers];
     [self initAudio];
+
+    self.rtb = [RTB instanceWithW:visibleTexWidth h:visibleTexHeight];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -256,7 +274,7 @@ OSStatus renderCallback(void *userData,
     if(landscape == 1) {
         size = screenWidth;
         visibleTexHeight = tex16_9;
-        visibleTexWidth = texWidth;
+        visibleTexWidth = visibleTexWidthLandscape;
     }
 
     // iPhone X
@@ -270,108 +288,11 @@ OSStatus renderCallback(void *userData,
         h *= screen_scaling_factor;
     }
 
-    //visible_w = w;
-    //visible_h = h;
-
     [self calculateInsets];
 
     GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, screenWidth, screenHeight, 0, 0, 1);
     self.effect.transform.projectionMatrix = projectionMatrix;
 }
-
-/*
- - (void) initVideo {
-
-     self.preferredFramesPerSecond = TARGET_FPS;
-     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-     if(!self.context) {
-         NSLog(@"Failed to create ES context");
-     }
-
-     GLKView *view = (GLKView *)self.view;
-     view.context = self.context;
-     [EAGLContext setCurrentContext:self.context];
-
-     self.effect = [[GLKBaseEffect alloc] init];
-
-     CGRect screenRect = [[UIScreen mainScreen] bounds];
-     CGFloat screenWidth = screenRect.size.width;
-     CGFloat screenHeight = screenRect.size.height;
-
-     NSLog(@"screen w:%f h:%f", screenWidth, screenHeight);
-
-     CGFloat size = screenHeight;
-     if(landscape == 1){
-         size = screenWidth;
-         visibleTexHeight = tex16_9;
-         visibleTexWidth = texWidth;
-     }
-
-     //
-     if(size == 2048) {
-         w = 2048;
-         h = 2048;
-     }
-
-     // iPad, iPad2, iPad Air, iPad Mini Retina, iPad Mini //768
-     else if(size == 1024) {
-         w = 1024;
-         h = 1024;
-     }
-
-     // iPhone 4 //320
-     else if(size == 480) {
-         w = 512;
-         h = 512;
-     }
-
-     // iPhone 5
-     else if(size == 568) {
-         w = 512;
-         h = 512;
-     }
-
-     // iPhone 6
-     else if(size == 667) {
-         w = 640;
-         h = 640;
-     }
-
-     // iPhone 6+
-     else if(size == 736) {
-         w = 725.299;
-         h = 725.299;
-     }
-
-     else {
-         // no supported resolution, just fill up and disregard scaling artifacts.
-         w = screenHeight;
-         h = screenHeight;
-     }
-
-     int x_offset = (screenWidth - (w * 0.5625)) / 2;
-     x = x_offset;
-     int y_offset = (screenHeight - h) / 2;
-     y = y_offset;
-
-     if(landscape == 1) {
-         int x_offset = (screenWidth - w) / 2;
-         x = x_offset;
-         int y_offset = (screenHeight - (h * 0.5625)) / 2;
-         y = y_offset;
-     }
-
-     // prevent screen disappearing upwards as is the case with 4S. In landscape, this would probably be better to disable.
-     if(landscape == 0) {
-         if(y < 0) {
-             y = 0;
-         }
-     }
-
-     GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, screenWidth, screenHeight, 0, 0, 1);
-     self.effect.transform.projectionMatrix = projectionMatrix;
- }
-*/
 
 - (void)calculateInsets {
     CGFloat visible_w = w * screen_scaling_factor_reverse;
@@ -515,7 +436,23 @@ void updateAudio(int size) {
     }
     int t_x = floor(pt.x * (visibleTexWidth * screen_scaling_factor));
     int t_y = floor(pt.y * (visibleTexHeight * screen_scaling_factor));
-    
+
+    if (t_x < 0) {
+        t_x = 0;
+    }
+
+    if (t_x >= visibleTexWidth) {
+        t_x = visibleTexWidth - 1;
+    }
+
+    if (t_y < 0) {
+        t_y = 0;
+    }
+
+    if (t_y >= visibleTexHeight) {
+        t_y = visibleTexHeight - 1;
+    }
+
     self.inputX = t_x;
     self.inputY = t_y;
 }

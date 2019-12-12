@@ -20,17 +20,19 @@ protocol RTBProtocol {
 }
 
 public class RTB: NSObject {
-    let width: Int = 180
-    let height: Int = 320
+    let width: Int
+    let height: Int
     let pixelCount: Int = 57600
     var raster: [UInt32] = Array(repeating: 0, count: 57600)
     var audioBuffer: [Int16] = Array(repeating: 0, count: 8192)
 
-    @objc static func instance() -> RTB {
-        return RTBDemo2()
+    @objc static func instance(w: Int, h: Int) -> RTB {
+        return RTBDemo2(width: w, height: h)
     }
 
-    override init() {
+    init(width: Int, height: Int) {
+        self.width = width
+        self.height = height
         super.init()
     }
 }
