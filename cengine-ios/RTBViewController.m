@@ -45,11 +45,9 @@ static const double screen_16_9_width_factor = 0.5625;
 
 static GLuint nID;
 
-static int tex16_9 = 180;
 static int texWidth = 512;
 static int texHeight = 512;
 static int visibleTexWidth = 180;
-static int visibleTexWidthLandscape = 320;
 static int visibleTexHeight = 320;
 
 static GLubyte *textureData;
@@ -57,8 +55,6 @@ static CGFloat x = 0;
 static CGFloat y = 0;
 static CGFloat w = 0;
 static CGFloat h = 0;
-//static CGFloat visible_w = 0;
-//static CGFloat visible_h = 0;
 static CGFloat screenWidth = 0;
 static CGFloat screenHeight = 0;
 
@@ -81,7 +77,6 @@ int sound_enabled = 1;
 
 #define MAX_TOUCHES 1
 #define TARGET_FPS 60
-#define landscape 1
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 OSStatus renderCallback(void *userData,
@@ -129,21 +124,9 @@ OSStatus renderCallback(void *userData,
 }
 
 - (BOOL)shouldAutorotate {
-    return YES;
+    return NO;
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if (landscape == 0) {
-        return (UIInterfaceOrientationPortrait | UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return (UIInterfaceOrientationLandscapeLeft | UIInterfaceOrientationLandscapeRight);
-    }
-}
-/*
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
-*/
 + (RTBViewController *)sharedInstance {
     return gameViewController;
 }
@@ -271,11 +254,6 @@ OSStatus renderCallback(void *userData,
     NSLog(@"screen w:%f h:%f", screenWidth, screenHeight);
 
     CGFloat size = screenHeight;
-    if(landscape == 1) {
-        size = screenWidth;
-        visibleTexHeight = tex16_9;
-        visibleTexWidth = visibleTexWidthLandscape;
-    }
 
     // iPhone X
     if(size == 812) {
@@ -288,25 +266,13 @@ OSStatus renderCallback(void *userData,
         h *= screen_scaling_factor;
     }
 
-    [self calculateInsets];
+    CGFloat visible_w = w * screen_scaling_factor_reverse;
+    CGFloat visible_h = h * screen_scaling_factor_reverse;
+    x = (screenWidth - (visible_w * screen_16_9_width_factor)) / 2;
+    y = (screenHeight - visible_h) / 2;
 
     GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, screenWidth, screenHeight, 0, 0, 1);
     self.effect.transform.projectionMatrix = projectionMatrix;
-}
-
-- (void)calculateInsets {
-    CGFloat visible_w = w * screen_scaling_factor_reverse;
-    CGFloat visible_h = h * screen_scaling_factor_reverse;
-    int x_offset = (screenWidth - (visible_w * screen_16_9_width_factor)) / 2;
-    x = x_offset;
-    int y_offset = (screenHeight - visible_h) / 2;
-    y = y_offset;
-    if(landscape == 1) {
-        int x_offset = (screenWidth - visible_w) / 2;
-        x = x_offset;
-        int y_offset = (screenHeight - (visible_h * screen_16_9_width_factor)) / 2;
-        y = y_offset;
-    }
 }
 
 - (void)initInput {
@@ -430,10 +396,10 @@ void updateAudio(int size) {
     //LogTrace(@"pt.x:%f pt.y:%f", pt.x, pt.y);
     pt.x -= x;
     pt.y -= y;
-    if(landscape == 0) {
-        pt.x = pt.x/t_16_9;
-        pt.y = pt.y/h;
-    }
+
+    pt.x = pt.x/t_16_9;
+    pt.y = pt.y/h;
+
     int t_x = floor(pt.x * (visibleTexWidth * screen_scaling_factor));
     int t_y = floor(pt.y * (visibleTexHeight * screen_scaling_factor));
 
@@ -476,35 +442,5 @@ void updateAudio(int size) {
     }
     self.inputEnded = YES;
 }
-
-/*
-- (void)renderTestScreen {
-    for (int r_x = 0; r_x < visibleTexWidth; r_x++) {
-        for (int r_y = 0; r_y < visibleTexHeight; r_y++) {
-            if(r_x <= visibleTexWidth && r_y <= visibleTexHeight) {
-                raster[r_x + r_y * visibleTexWidth] = 0x333300ff;
-                if((r_x / 2) + (r_x / 2) == r_x) {
-                    raster[r_x + r_y * visibleTexWidth] = 0x3355ffff;
-                }
-                if((r_y / 2) + (r_y / 2) == r_y) {
-                    raster[r_x + r_y * visibleTexWidth] = 0x992233ff;
-                }
-                if(r_x == 0 || r_y == 0) {
-                    raster[r_x + r_y * visibleTexWidth] = 0xff00ffff;
-                }
-                if(r_y == visibleTexHeight-1) {
-                    raster[r_x + r_y * visibleTexWidth] = 0xff00ffff;
-                }
-                if(r_x == visibleTexWidth-1) {
-                    raster[r_x + r_y * visibleTexWidth] = 0xff00ffff;
-                }
-                if(r_x == 0 && r_y == 0) {
-                    raster[r_x + r_y * visibleTexWidth] = 0xffffffff;
-                }
-            }
-        }
-    }
-}
- */
 
 @end
