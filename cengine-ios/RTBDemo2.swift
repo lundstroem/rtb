@@ -9,6 +9,8 @@
 class RTBDemo2: RTB {
 
     var written = false
+    var portrait = true
+
     override init(width: Int, height: Int) {
         super.init(width: width, height: height)
     }

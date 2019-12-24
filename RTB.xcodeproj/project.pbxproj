@@ -17,6 +17,7 @@
 		033ACAFE1B6188ED00DC8154 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033ACAFC1B6188ED00DC8154 /* Main.storyboard */; };
 		033ACB001B6188ED00DC8154 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033ACAFF1B6188ED00DC8154 /* Images.xcassets */; };
 		033ACB031B6188ED00DC8154 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033ACB011B6188ED00DC8154 /* LaunchScreen.xib */; };
+		03C21C2323B25AA100A0A21A /* RTBDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C21C2223B25AA100A0A21A /* RTBDemo3.swift */; };
 		03D708E4206F5E770000459B /* RTAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D708E2206F5E770000459B /* RTAudioBuffer.m */; };
 		03D953B122FAEA0B00585913 /* RTBDemo1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D953B022FAEA0B00585913 /* RTBDemo1.swift */; };
 		03F2184822F0477400F2376C /* RTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2184722F0477400F2376C /* RTB.swift */; };
@@ -48,6 +49,7 @@
 		033ACAFF1B6188ED00DC8154 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		033ACB021B6188ED00DC8154 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		033ACB081B6188ED00DC8154 /* RTB.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTB.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		03C21C2223B25AA100A0A21A /* RTBDemo3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBDemo3.swift; sourceTree = "<group>"; };
 		03D708E2206F5E770000459B /* RTAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTAudioBuffer.m; path = "cengine-ios/RTAudioBuffer.m"; sourceTree = SOURCE_ROOT; };
 		03D708E3206F5E770000459B /* RTAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTAudioBuffer.h; path = "cengine-ios/RTAudioBuffer.h"; sourceTree = SOURCE_ROOT; };
 		03D953B022FAEA0B00585913 /* RTBDemo1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBDemo1.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				03F2184622F0477400F2376C /* RTB-Bridging-Header.h */,
 				03D953B022FAEA0B00585913 /* RTBDemo1.swift */,
 				03252013238C697700FD63CF /* RTBDemo2.swift */,
+				03C21C2223B25AA100A0A21A /* RTBDemo3.swift */,
 				03252015238C6BAF00FD63CF /* todo.txt */,
 			);
 			name = "vlk-ios";
@@ -244,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03252014238C697700FD63CF /* RTBDemo2.swift in Sources */,
+				03C21C2323B25AA100A0A21A /* RTBDemo3.swift in Sources */,
 				03D708E4206F5E770000459B /* RTAudioBuffer.m in Sources */,
 				033ACAF41B6188ED00DC8154 /* AppDelegate.m in Sources */,
 				033ACAFB1B6188ED00DC8154 /* RTBViewController.m in Sources */,

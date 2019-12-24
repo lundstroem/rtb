@@ -27,7 +27,7 @@ public class RTB: NSObject {
     var audioBuffer: [Int16] = Array(repeating: 0, count: 8192)
 
     @objc static func instance(w: Int, h: Int) -> RTB {
-        return RTBDemo2(width: w, height: h)
+        return RTBDemo3(width: w, height: h)
     }
 
     init(width: Int, height: Int) {

@@ -44,11 +44,12 @@ static const double screen_16_9_width_factor = 0.5625;
 // TODO: Put variables as static or in struct.
 
 static GLuint nID;
+BOOL portrait = false;
 
 static int texWidth = 512;
 static int texHeight = 512;
-static int visibleTexWidth = 180;
-static int visibleTexHeight = 320;
+static int visibleTexPortraitWidth = 180;
+static int visibleTexPortraitHeight = 320;
 
 static GLubyte *textureData;
 static CGFloat x = 0;
@@ -93,10 +94,6 @@ OSStatus renderCallback(void *userData,
         inputFrames[i] = 0;
     }
 
-    // When generating samples from a data structure such as a synthesizer that is controlled from
-    // a UI thread, use a mutex to prevent the two threads from manupulating the data at the same time.
-    // The code that manipulates the structure in the UI thread needs to be enclosed with the same mutex.
-    // Try to keep the work inside the locks to an absolute minimum to prevent stalling.
     pthread_mutex_lock(&mutex);
 
     if (sound_enabled == 0) {
@@ -227,7 +224,7 @@ OSStatus renderCallback(void *userData,
     [self addObservers];
     [self initAudio];
 
-    self.rtb = [RTB instanceWithW:visibleTexWidth h:visibleTexHeight];
+    self.rtb = [RTB instanceWithW:visibleTexPortraitWidth h:visibleTexPortraitHeight];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -297,7 +294,7 @@ OSStatus renderCallback(void *userData,
 }
 
 - (void)drawTexture {
-    for (int i = 0; i < visibleTexWidth * visibleTexHeight; i++) {
+    for (int i = 0; i < visibleTexPortraitWidth * visibleTexPortraitHeight; i++) {
         int iterator = i * 4;
         unsigned int color_int = [[self.rasterObjC objectAtIndex:i] intValue];
         textureData[iterator+3] = color_int & 0xff; //red
@@ -324,7 +321,7 @@ OSStatus renderCallback(void *userData,
     self.effect.texture2d0.enabled = YES;
     [self.effect prepareToDraw];
 
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, visibleTexWidth, visibleTexHeight, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, visibleTexPortraitWidth, visibleTexPortraitHeight, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
     glEnableVertexAttribArray(GLKVertexAttribPosition);
     glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
     glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, geometryVertex)));
@@ -400,23 +397,23 @@ void updateAudio(int size) {
     pt.x = pt.x/t_16_9;
     pt.y = pt.y/h;
 
-    int t_x = floor(pt.x * (visibleTexWidth * screen_scaling_factor));
-    int t_y = floor(pt.y * (visibleTexHeight * screen_scaling_factor));
+    int t_x = floor(pt.x * (visibleTexPortraitWidth * screen_scaling_factor));
+    int t_y = floor(pt.y * (visibleTexPortraitHeight * screen_scaling_factor));
 
     if (t_x < 0) {
         t_x = 0;
     }
 
-    if (t_x >= visibleTexWidth) {
-        t_x = visibleTexWidth - 1;
+    if (t_x >= visibleTexPortraitWidth) {
+        t_x = visibleTexPortraitWidth - 1;
     }
 
     if (t_y < 0) {
         t_y = 0;
     }
 
-    if (t_y >= visibleTexHeight) {
-        t_y = visibleTexHeight - 1;
+    if (t_y >= visibleTexPortraitHeight) {
+        t_y = visibleTexPortraitHeight - 1;
     }
 
     self.inputX = t_x;
