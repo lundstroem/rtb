@@ -43,19 +43,9 @@ class RTBDemo4: RTB {
                         drawPixel(x: x, y: y, color: 0x992233ff)
                     }
 
-                    if x == 0 || y == 0 || y == height-1 || x == width-1{
+                    if x == 0 || y == 0 || y == height-1 || x == width-1 {
                         drawPixel(x: x, y: y, color: 0xff0000ff)
                     }
-                    /*
-                    if y == height-1 {
-                        drawPixel(x: x, y: y, color: 0xff00ffff)
-                    }
-                    if x == width-1 {
-                        drawPixel(x: x, y: y, color: 0xff00ffff)
-                    }
-                    if x == 0 && x == 0 {
-                        drawPixel(x: x, y: y, color:  0xffffffff)
-                    }*/
                 }
             }
             written = true
