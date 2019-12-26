@@ -57,9 +57,11 @@ public class RTB: NSObject {
 extension RTB {
 
     func drawPixel(x: Int, y: Int, color: UInt32) {
+        // Override for optimizations.
+
         var index = x + y * width
         if orientation == .landscape {
-            index = abs(y-180) + x * height
+            index = abs(y-179) + x * height
         }
         if index > -1 && index < pixelCount {
             raster[index] = color

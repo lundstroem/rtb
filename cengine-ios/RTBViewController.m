@@ -367,12 +367,8 @@ void updateAudio(int size) {
     int inputY = self.inputY;
 
     if (![self.rtb isPortrait]) {
-    /*let l_width = 320
-    let l_height = 180
-    let l_inputX = inputY
-    let l_inputY = abs(inputX-180)*/
         inputX = inputY;
-        inputY = abs(self.inputX-180);
+        inputY = abs(self.inputX-179);
     }
 
     NSArray<NSNumber *> *r = [self.rtb updateWithDeltaTime:ms_dt

@@ -42,10 +42,11 @@ class RTBDemo4: RTB {
                     if (y / 2) + (y / 2) == y {
                         drawPixel(x: x, y: y, color: 0x992233ff)
                     }
-                    /*
-                    if x == 0 || y == 0 {
-                        drawPixel(x: x, y: y, color: 0xffffffff)
+
+                    if x == 0 || y == 0 || y == height-1 || x == width-1{
+                        drawPixel(x: x, y: y, color: 0xff0000ff)
                     }
+                    /*
                     if y == height-1 {
                         drawPixel(x: x, y: y, color: 0xff00ffff)
                     }
