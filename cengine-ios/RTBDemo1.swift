@@ -18,8 +18,8 @@ class RTBDemo1: RTB {
     var currentPhase: Double = 0
     var currentPhaseInt: Int = 0
 
-    override init(width: Int, height: Int) {
-        super.init(width: width, height: height)
+    override init(orientation: Orientation) {
+        super.init(orientation: orientation)
     }
 
     override func updateAudio(bufferSize: Int) -> [Int16] {

@@ -8,6 +8,11 @@
 
 import Foundation
 
+@objc enum Orientation: Int {
+    case landscape
+    case portrait
+}
+
 protocol RTBProtocol {
     func updateAudio(bufferSize: Int) -> [Int16]
     func update(deltaTime: Double,
@@ -19,21 +24,46 @@ protocol RTBProtocol {
                 inputEnded: Bool) -> [UInt32]
 }
 
+@objcMembers
 public class RTB: NSObject {
-    let width: Int
-    let height: Int
+    var width: Int = 180
+    var height: Int = 320
     let pixelCount: Int = 57600
+    let orientation: Orientation
     var raster: [UInt32] = Array(repeating: 0, count: 57600)
     var audioBuffer: [Int16] = Array(repeating: 0, count: 8192)
 
-    @objc static func instance(w: Int, h: Int) -> RTB {
-        return RTBDemo3(width: w, height: h)
+    @objc static func instance() -> RTB {
+        return RTBDemo4(orientation: .portrait)
     }
 
-    init(width: Int, height: Int) {
-        self.width = width
-        self.height = height
+    @objc func isPortrait() -> Bool {
+        return orientation == .portrait
+    }
+
+    init(orientation: Orientation) {
+        self.orientation = orientation
+        if orientation == .portrait {
+            self.width = 180
+            self.height = 320
+        } else {
+            self.width = 320
+            self.height = 180
+        }
         super.init()
+    }
+}
+
+extension RTB {
+
+    func drawPixel(x: Int, y: Int, color: UInt32) {
+        var index = x + y * width
+        if orientation == .landscape {
+            index = abs(y-180) + x * height
+        }
+        if index > -1 && index < pixelCount {
+            raster[index] = color
+        }
     }
 }
 

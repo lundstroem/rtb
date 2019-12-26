@@ -20,6 +20,7 @@
 		03C21C2323B25AA100A0A21A /* RTBDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C21C2223B25AA100A0A21A /* RTBDemo3.swift */; };
 		03D708E4206F5E770000459B /* RTAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D708E2206F5E770000459B /* RTAudioBuffer.m */; };
 		03D953B122FAEA0B00585913 /* RTBDemo1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D953B022FAEA0B00585913 /* RTBDemo1.swift */; };
+		03D957DE23B4BA3600DBC3D4 /* RTBDemo4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D957DD23B4BA3600DBC3D4 /* RTBDemo4.swift */; };
 		03F2184822F0477400F2376C /* RTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2184722F0477400F2376C /* RTB.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		03D708E2206F5E770000459B /* RTAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTAudioBuffer.m; path = "cengine-ios/RTAudioBuffer.m"; sourceTree = SOURCE_ROOT; };
 		03D708E3206F5E770000459B /* RTAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTAudioBuffer.h; path = "cengine-ios/RTAudioBuffer.h"; sourceTree = SOURCE_ROOT; };
 		03D953B022FAEA0B00585913 /* RTBDemo1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBDemo1.swift; sourceTree = "<group>"; };
+		03D957DD23B4BA3600DBC3D4 /* RTBDemo4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBDemo4.swift; sourceTree = "<group>"; };
 		03F2184622F0477400F2376C /* RTB-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTB-Bridging-Header.h"; sourceTree = "<group>"; };
 		03F2184722F0477400F2376C /* RTB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +98,7 @@
 		033ACAED1B6188ED00DC8154 /* vlk-ios */ = {
 			isa = PBXGroup;
 			children = (
+				03D957DF23B4BA4000DBC3D4 /* demos */,
 				033ACAF21B6188ED00DC8154 /* AppDelegate.h */,
 				033ACAF31B6188ED00DC8154 /* AppDelegate.m */,
 				03D708E3206F5E770000459B /* RTAudioBuffer.h */,
@@ -110,9 +113,6 @@
 				033ACAEE1B6188ED00DC8154 /* Supporting Files */,
 				03F2184722F0477400F2376C /* RTB.swift */,
 				03F2184622F0477400F2376C /* RTB-Bridging-Header.h */,
-				03D953B022FAEA0B00585913 /* RTBDemo1.swift */,
-				03252013238C697700FD63CF /* RTBDemo2.swift */,
-				03C21C2223B25AA100A0A21A /* RTBDemo3.swift */,
 				03252015238C6BAF00FD63CF /* todo.txt */,
 			);
 			name = "vlk-ios";
@@ -133,6 +133,17 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		03D957DF23B4BA4000DBC3D4 /* demos */ = {
+			isa = PBXGroup;
+			children = (
+				03D953B022FAEA0B00585913 /* RTBDemo1.swift */,
+				03252013238C697700FD63CF /* RTBDemo2.swift */,
+				03C21C2223B25AA100A0A21A /* RTBDemo3.swift */,
+				03D957DD23B4BA3600DBC3D4 /* RTBDemo4.swift */,
+			);
+			name = demos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +261,7 @@
 				03C21C2323B25AA100A0A21A /* RTBDemo3.swift in Sources */,
 				03D708E4206F5E770000459B /* RTAudioBuffer.m in Sources */,
 				033ACAF41B6188ED00DC8154 /* AppDelegate.m in Sources */,
+				03D957DE23B4BA3600DBC3D4 /* RTBDemo4.swift in Sources */,
 				033ACAFB1B6188ED00DC8154 /* RTBViewController.m in Sources */,
 				033ACAF11B6188ED00DC8154 /* main.m in Sources */,
 				03F2184822F0477400F2376C /* RTB.swift in Sources */,

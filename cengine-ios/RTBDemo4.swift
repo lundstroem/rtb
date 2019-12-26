@@ -6,10 +6,9 @@
 //  Copyright © 2019 Harry Lundstrom. All rights reserved.
 //
 
-class RTBDemo2: RTB {
+class RTBDemo4: RTB {
 
     var written = false
-    var portrait = true
 
     override init(orientation: Orientation) {
         super.init(orientation: orientation)
@@ -35,34 +34,40 @@ class RTBDemo2: RTB {
         if !written {
             for x in 0...width-1 {
                 for y in 0...height-1 {
-                    raster[x + y * width] = 0x333300ff
+
+                    drawPixel(x: x, y: y, color: 0x333300ff)
                     if (x / 2) + (x / 2) == x {
-                        raster[x + y * width] = 0x3355ffff
+                        drawPixel(x: x, y: y, color: 0x3355ffff)
                     }
                     if (y / 2) + (y / 2) == y {
-                        raster[x + y * width] = 0x992233ff
+                        drawPixel(x: x, y: y, color: 0x992233ff)
                     }
+                    /*
                     if x == 0 || y == 0 {
-                        raster[x + y * width] = 0xffffffff
+                        drawPixel(x: x, y: y, color: 0xffffffff)
                     }
                     if y == height-1 {
-                        raster[x + y * width] = 0xff00ffff
+                        drawPixel(x: x, y: y, color: 0xff00ffff)
                     }
                     if x == width-1 {
-                        raster[x + y * width] = 0xff00ffff
+                        drawPixel(x: x, y: y, color: 0xff00ffff)
                     }
                     if x == 0 && x == 0 {
-                        raster[x + y * width] = 0xffffffff
-                    }
+                        drawPixel(x: x, y: y, color:  0xffffffff)
+                    }*/
                 }
             }
             written = true
         }
-        let pixel = inputX + inputY * width
+        let pixel = inputY + inputX * height
 
         if inputActive && pixel < pixelCount {
-            raster[inputX + inputY * width] = 0xff0000ff
+            drawPixel(x: inputX, y: inputY, color: 0xffff00ff)
         }
+
+        print("x:\(inputX) y:\(inputY)")
+
         return raster
+
     }
 }
