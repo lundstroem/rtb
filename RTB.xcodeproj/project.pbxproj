@@ -1,0 +1,644 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		030197AD240D4B6C0071B955 /* RTB+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030197AC240D4B6C0071B955 /* RTB+Label.swift */; };
+		030197AE240D4B6C0071B955 /* RTB+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030197AC240D4B6C0071B955 /* RTB+Label.swift */; };
+		03265DAF23E73D8400321D8C /* iOSRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03265DAE23E73D8400321D8C /* iOSRenderer.m */; };
+		03265DB423E74AA900321D8C /* iOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03265DB323E74AA900321D8C /* iOSViewController.m */; };
+		034B2020240BC0F6008CE429 /* RTAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 034B201F240BC0F6008CE429 /* RTAudioBuffer.m */; };
+		034B2021240BC0F6008CE429 /* RTAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 034B201F240BC0F6008CE429 /* RTAudioBuffer.m */; };
+		034B2024240BC177008CE429 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034B2023240BC177008CE429 /* AudioToolbox.framework */; };
+		034B2026240BC18F008CE429 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034B2025240BC18F008CE429 /* AudioToolbox.framework */; };
+		037F659D2402AEE1000CC996 /* RTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F65982402AEE1000CC996 /* RTB.swift */; };
+		037F659E2402AEE1000CC996 /* RTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F65982402AEE1000CC996 /* RTB.swift */; };
+		037F65A02402AEE1000CC996 /* RTBDemo4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F65992402AEE1000CC996 /* RTBDemo4.swift */; };
+		037F65A12402AEE1000CC996 /* RTBDemo4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F65992402AEE1000CC996 /* RTBDemo4.swift */; };
+		037F65A32402AEE1000CC996 /* RTBDemo1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659A2402AEE1000CC996 /* RTBDemo1.swift */; };
+		037F65A42402AEE1000CC996 /* RTBDemo1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659A2402AEE1000CC996 /* RTBDemo1.swift */; };
+		037F65A62402AEE1000CC996 /* RTBDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659B2402AEE1000CC996 /* RTBDemo2.swift */; };
+		037F65A72402AEE1000CC996 /* RTBDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659B2402AEE1000CC996 /* RTBDemo2.swift */; };
+		037F65A92402AEE1000CC996 /* RTBDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659C2402AEE1000CC996 /* RTBDemo3.swift */; };
+		037F65AA2402AEE1000CC996 /* RTBDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659C2402AEE1000CC996 /* RTBDemo3.swift */; };
+		03AD4E3C240E816E006A1312 /* RTB+Synth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD4E3B240E816E006A1312 /* RTB+Synth.swift */; };
+		03AD4E3D240E816E006A1312 /* RTB+Synth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD4E3B240E816E006A1312 /* RTB+Synth.swift */; };
+		3ABBE2791F7319890080C72C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABBE2761F7319760080C72C /* MetalKit.framework */; };
+		3ABBE27C1F7319950080C72C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABBE2771F7319760080C72C /* MetalKit.framework */; };
+		3AF7EA0A1EB64A46003BB06D /* MacRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF7E9BF1EB64A46003BB06D /* MacRenderer.m */; };
+		3AF7EA0C1EB64A46003BB06D /* MacRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF7E9BF1EB64A46003BB06D /* MacRenderer.m */; };
+		3AFD655F1F71A71B0008A125 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AFD65591F71A7070008A125 /* Main.storyboard */; };
+		3AFD65631F71A7240008A125 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AFD65471F71A7070008A125 /* LaunchScreen.storyboard */; };
+		3AFD65641F71A7240008A125 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AFD65491F71A7070008A125 /* Main.storyboard */; };
+		3AFD656C1F71A8980008A125 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD656B1F71A8910008A125 /* AppDelegate.m */; };
+		3AFD656E1F71A89E0008A125 /* MacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD656A1F71A8900008A125 /* MacViewController.m */; };
+		3AFD656F1F71A89E0008A125 /* MacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD656A1F71A8900008A125 /* MacViewController.m */; };
+		3AFD65711F71A8A00008A125 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD65691F71A8900008A125 /* main.m */; };
+		3AFD65721F71A8A10008A125 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD65691F71A8900008A125 /* main.m */; };
+		63B42F161ED2063300859D09 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3AF7E9C11EB64A46003BB06D /* Shaders.metal */; };
+		63B42F181ED2063C00859D09 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3AF7E9C11EB64A46003BB06D /* Shaders.metal */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		030197AC240D4B6C0071B955 /* RTB+Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RTB+Label.swift"; sourceTree = "<group>"; };
+		03265DAD23E73D8400321D8C /* iOSRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSRenderer.h; sourceTree = "<group>"; };
+		03265DAE23E73D8400321D8C /* iOSRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSRenderer.m; sourceTree = "<group>"; };
+		03265DB223E74AA900321D8C /* iOSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSViewController.h; sourceTree = "<group>"; };
+		03265DB323E74AA900321D8C /* iOSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSViewController.m; sourceTree = "<group>"; };
+		034B201E240BC0F6008CE429 /* RTAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAudioBuffer.h; sourceTree = "<group>"; };
+		034B201F240BC0F6008CE429 /* RTAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAudioBuffer.m; sourceTree = "<group>"; };
+		034B2023240BC177008CE429 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		034B2025240BC18F008CE429 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		034B2027240BC1A0008CE429 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.2.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		034B2029240BC4DD008CE429 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		037F65952402AEE1000CC996 /* RTB-macOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTB-macOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		037F65962402AEE1000CC996 /* RTB-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTB-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		037F65972402AEE1000CC996 /* RTB-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTB-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		037F65982402AEE1000CC996 /* RTB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTB.swift; sourceTree = "<group>"; };
+		037F65992402AEE1000CC996 /* RTBDemo4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo4.swift; sourceTree = "<group>"; };
+		037F659A2402AEE1000CC996 /* RTBDemo1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo1.swift; sourceTree = "<group>"; };
+		037F659B2402AEE1000CC996 /* RTBDemo2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo2.swift; sourceTree = "<group>"; };
+		037F659C2402AEE1000CC996 /* RTBDemo3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo3.swift; sourceTree = "<group>"; };
+		03AD4E3B240E816E006A1312 /* RTB+Synth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RTB+Synth.swift"; sourceTree = "<group>"; };
+		3A93731A1EBB8C17007D505D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		3ABBE2761F7319760080C72C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
+		3ABBE2771F7319760080C72C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		3ABBE2781F7319760080C72C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.0.sdk/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
+		3AF7E9BE1EB64A46003BB06D /* MacRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacRenderer.h; sourceTree = "<group>"; };
+		3AF7E9BF1EB64A46003BB06D /* MacRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacRenderer.m; sourceTree = "<group>"; };
+		3AF7E9C01EB64A46003BB06D /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		3AF7E9C11EB64A46003BB06D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		3AF7E9C81EB64A46003BB06D /* RTB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RTB.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AF7E9F81EB64A46003BB06D /* RTB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RTB.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AFD65481F71A7070008A125 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3AFD654A1F71A7070008A125 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3AFD654B1F71A7070008A125 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AFD655A1F71A7070008A125 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3AFD655B1F71A7070008A125 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AFD65691F71A8900008A125 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3AFD656A1F71A8900008A125 /* MacViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacViewController.m; sourceTree = "<group>"; };
+		3AFD656B1F71A8910008A125 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3AFD65741F71A8A70008A125 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3AFD65751F71A8AB0008A125 /* MacViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacViewController.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3AF7E9C51EB64A46003BB06D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				034B2026240BC18F008CE429 /* AudioToolbox.framework in Frameworks */,
+				3ABBE2791F7319890080C72C /* MetalKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AF7E9F51EB64A46003BB06D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				034B2024240BC177008CE429 /* AudioToolbox.framework in Frameworks */,
+				3ABBE27C1F7319950080C72C /* MetalKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		030197B0240D4DAF0071B955 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				030197AC240D4B6C0071B955 /* RTB+Label.swift */,
+				03AD4E3B240E816E006A1312 /* RTB+Synth.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		034B201D240BC0B4008CE429 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				034B201E240BC0F6008CE429 /* RTAudioBuffer.h */,
+				034B201F240BC0F6008CE429 /* RTAudioBuffer.m */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		0359B78C240F913B000374B9 /* Demos */ = {
+			isa = PBXGroup;
+			children = (
+				037F659A2402AEE1000CC996 /* RTBDemo1.swift */,
+				037F659B2402AEE1000CC996 /* RTBDemo2.swift */,
+				037F659C2402AEE1000CC996 /* RTBDemo3.swift */,
+				037F65992402AEE1000CC996 /* RTBDemo4.swift */,
+			);
+			path = Demos;
+			sourceTree = "<group>";
+		};
+		0359B78D240F9179000374B9 /* BridgingHeaders */ = {
+			isa = PBXGroup;
+			children = (
+				037F65952402AEE1000CC996 /* RTB-macOS-Bridging-Header.h */,
+				037F65962402AEE1000CC996 /* RTB-iOS-Bridging-Header.h */,
+				037F65972402AEE1000CC996 /* RTB-tvOS-Bridging-Header.h */,
+			);
+			path = BridgingHeaders;
+			sourceTree = "<group>";
+		};
+		037F65942402AEB3000CC996 /* RTB */ = {
+			isa = PBXGroup;
+			children = (
+				0359B78D240F9179000374B9 /* BridgingHeaders */,
+				0359B78C240F913B000374B9 /* Demos */,
+				030197B0240D4DAF0071B955 /* Utils */,
+				037F65982402AEE1000CC996 /* RTB.swift */,
+			);
+			path = RTB;
+			sourceTree = "<group>";
+		};
+		3ABBE2751F73196D0080C72C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				034B2029240BC4DD008CE429 /* AudioUnit.framework */,
+				034B2023240BC177008CE429 /* AudioToolbox.framework */,
+				034B2025240BC18F008CE429 /* AudioToolbox.framework */,
+				034B2027240BC1A0008CE429 /* AudioToolbox.framework */,
+				3ABBE2781F7319760080C72C /* MetalKit.framework */,
+				3ABBE2771F7319760080C72C /* MetalKit.framework */,
+				3ABBE2761F7319760080C72C /* MetalKit.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		3AF7E9B71EB64A46003BB06D = {
+			isa = PBXGroup;
+			children = (
+				034B201D240BC0B4008CE429 /* Audio */,
+				037F65942402AEB3000CC996 /* RTB */,
+				3A93731A1EBB8C17007D505D /* README.md */,
+				3AF7E9BC1EB64A46003BB06D /* Renderer */,
+				3AFD65411F71A6D00008A125 /* Application */,
+				3ABBE2751F73196D0080C72C /* Frameworks */,
+				3AF7E9C91EB64A46003BB06D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3AF7E9BC1EB64A46003BB06D /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				3AF7E9BE1EB64A46003BB06D /* MacRenderer.h */,
+				3AF7E9BF1EB64A46003BB06D /* MacRenderer.m */,
+				3AF7E9C01EB64A46003BB06D /* ShaderTypes.h */,
+				3AF7E9C11EB64A46003BB06D /* Shaders.metal */,
+				03265DAD23E73D8400321D8C /* iOSRenderer.h */,
+				03265DAE23E73D8400321D8C /* iOSRenderer.m */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		3AF7E9C91EB64A46003BB06D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3AF7E9C81EB64A46003BB06D /* RTB.app */,
+				3AF7E9F81EB64A46003BB06D /* RTB.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3AFD65411F71A6D00008A125 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				3AFD65741F71A8A70008A125 /* AppDelegate.h */,
+				3AFD656B1F71A8910008A125 /* AppDelegate.m */,
+				3AFD65691F71A8900008A125 /* main.m */,
+				3AFD65561F71A7070008A125 /* macOS */,
+				3AFD65421F71A7070008A125 /* iOS */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		3AFD65421F71A7070008A125 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				03265DB223E74AA900321D8C /* iOSViewController.h */,
+				03265DB323E74AA900321D8C /* iOSViewController.m */,
+				3AFD65471F71A7070008A125 /* LaunchScreen.storyboard */,
+				3AFD65491F71A7070008A125 /* Main.storyboard */,
+				3AFD654B1F71A7070008A125 /* Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		3AFD65561F71A7070008A125 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				3AFD65751F71A8AB0008A125 /* MacViewController.h */,
+				3AFD656A1F71A8900008A125 /* MacViewController.m */,
+				3AFD65591F71A7070008A125 /* Main.storyboard */,
+				3AFD655B1F71A7070008A125 /* Info.plist */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3AF7E9C71EB64A46003BB06D /* RTB-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AF7EA1B1EB64A46003BB06D /* Build configuration list for PBXNativeTarget "RTB-iOS" */;
+			buildPhases = (
+				3AF7E9C41EB64A46003BB06D /* Sources */,
+				3AF7E9C51EB64A46003BB06D /* Frameworks */,
+				3AF7E9C61EB64A46003BB06D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RTB-iOS";
+			productName = iOS;
+			productReference = 3AF7E9C81EB64A46003BB06D /* RTB.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3AF7E9F71EB64A46003BB06D /* RTB-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AF7EA211EB64A46003BB06D /* Build configuration list for PBXNativeTarget "RTB-macOS" */;
+			buildPhases = (
+				3AF7E9F41EB64A46003BB06D /* Sources */,
+				3AF7E9F51EB64A46003BB06D /* Frameworks */,
+				3AF7E9F61EB64A46003BB06D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RTB-macOS";
+			productName = macOS;
+			productReference = 3AF7E9F81EB64A46003BB06D /* RTB.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3AF7E9B81EB64A46003BB06D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = Apple;
+				TargetAttributes = {
+					3AF7E9C71EB64A46003BB06D = {
+						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 1130;
+						ProvisioningStyle = Manual;
+					};
+					3AF7E9F71EB64A46003BB06D = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = QM9YTQA8XQ;
+						LastSwiftMigration = 1130;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 3AF7E9BB1EB64A46003BB06D /* Build configuration list for PBXProject "RTB" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3AF7E9B71EB64A46003BB06D;
+			productRefGroup = 3AF7E9C91EB64A46003BB06D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3AF7E9F71EB64A46003BB06D /* RTB-macOS */,
+				3AF7E9C71EB64A46003BB06D /* RTB-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3AF7E9C61EB64A46003BB06D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AFD65641F71A7240008A125 /* Main.storyboard in Resources */,
+				3AFD65631F71A7240008A125 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AF7E9F61EB64A46003BB06D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AFD655F1F71A71B0008A125 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3AF7E9C41EB64A46003BB06D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63B42F161ED2063300859D09 /* Shaders.metal in Sources */,
+				034B2021240BC0F6008CE429 /* RTAudioBuffer.m in Sources */,
+				037F65AA2402AEE1000CC996 /* RTBDemo3.swift in Sources */,
+				3AF7EA0A1EB64A46003BB06D /* MacRenderer.m in Sources */,
+				03265DB423E74AA900321D8C /* iOSViewController.m in Sources */,
+				3AFD656F1F71A89E0008A125 /* MacViewController.m in Sources */,
+				037F65A12402AEE1000CC996 /* RTBDemo4.swift in Sources */,
+				03AD4E3D240E816E006A1312 /* RTB+Synth.swift in Sources */,
+				037F65A42402AEE1000CC996 /* RTBDemo1.swift in Sources */,
+				037F659E2402AEE1000CC996 /* RTB.swift in Sources */,
+				3AFD65721F71A8A10008A125 /* main.m in Sources */,
+				3AFD656C1F71A8980008A125 /* AppDelegate.m in Sources */,
+				03265DAF23E73D8400321D8C /* iOSRenderer.m in Sources */,
+				030197AE240D4B6C0071B955 /* RTB+Label.swift in Sources */,
+				037F65A72402AEE1000CC996 /* RTBDemo2.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AF7E9F41EB64A46003BB06D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				037F65A62402AEE1000CC996 /* RTBDemo2.swift in Sources */,
+				3AFD65711F71A8A00008A125 /* main.m in Sources */,
+				3AFD656E1F71A89E0008A125 /* MacViewController.m in Sources */,
+				63B42F181ED2063C00859D09 /* Shaders.metal in Sources */,
+				034B2020240BC0F6008CE429 /* RTAudioBuffer.m in Sources */,
+				037F65A92402AEE1000CC996 /* RTBDemo3.swift in Sources */,
+				3AF7EA0C1EB64A46003BB06D /* MacRenderer.m in Sources */,
+				03AD4E3C240E816E006A1312 /* RTB+Synth.swift in Sources */,
+				037F65A02402AEE1000CC996 /* RTBDemo4.swift in Sources */,
+				037F65A32402AEE1000CC996 /* RTBDemo1.swift in Sources */,
+				030197AD240D4B6C0071B955 /* RTB+Label.swift in Sources */,
+				037F659D2402AEE1000CC996 /* RTB.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3AFD65471F71A7070008A125 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3AFD65481F71A7070008A125 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		3AFD65491F71A7070008A125 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3AFD654A1F71A7070008A125 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3AFD65591F71A7070008A125 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3AFD655A1F71A7070008A125 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3AF7EA191EB64A46003BB06D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		3AF7EA1A1EB64A46003BB06D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+			};
+			name = Release;
+		};
+		3AF7EA1C1EB64A46003BB06D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					TARGET_IOS,
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Application/iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.rtb;
+				PRODUCT_NAME = RTB;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "RTB/BridgingHeaders/RTB-iOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3AF7EA1D1EB64A46003BB06D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_PREPROCESSOR_DEFINITIONS = TARGET_IOS;
+				INFOPLIST_FILE = Application/iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.rtb;
+				PRODUCT_NAME = RTB;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "RTB/BridgingHeaders/RTB-iOS-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3AF7EA221EB64A46003BB06D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = QM9YTQA8XQ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					TARGET_MACOS,
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Application/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.rtb;
+				PRODUCT_NAME = RTB;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "RTB/BridgingHeaders/RTB-macOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3AF7EA231EB64A46003BB06D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = QM9YTQA8XQ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = TARGET_MACOS;
+				INFOPLIST_FILE = Application/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.rtb;
+				PRODUCT_NAME = RTB;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "RTB/BridgingHeaders/RTB-macOS-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3AF7E9BB1EB64A46003BB06D /* Build configuration list for PBXProject "RTB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AF7EA191EB64A46003BB06D /* Debug */,
+				3AF7EA1A1EB64A46003BB06D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AF7EA1B1EB64A46003BB06D /* Build configuration list for PBXNativeTarget "RTB-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AF7EA1C1EB64A46003BB06D /* Debug */,
+				3AF7EA1D1EB64A46003BB06D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AF7EA211EB64A46003BB06D /* Build configuration list for PBXNativeTarget "RTB-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AF7EA221EB64A46003BB06D /* Debug */,
+				3AF7EA231EB64A46003BB06D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3AF7E9B81EB64A46003BB06D /* Project object */;
+}
