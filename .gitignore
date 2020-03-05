@@ -5,12 +5,11 @@
 # *.[oa]
 # *~
 
-.DS_Store
 *.swp
 *~.nib
 
 # Xcode
-#
+
 build/
 *.pbxuser
 !default.pbxuser
@@ -28,11 +27,20 @@ DerivedData
 *.ipa
 *.xcuserstate
 
-# CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
-#
-# Pods/
+# Finder
+.DS_Store
 
+# Xcode - User files
+xcuserdata/
+
+**/*.xcodeproj/project.xcworkspace/*
+!**/*.xcodeproj/project.xcworkspace/xcshareddata
+
+**/*.xcodeproj/project.xcworkspace/xcshareddata/*
+!**/*.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+
+**/*.playground/playground.xcworkspace/*
+!**/*.playground/playground.xcworkspace/xcshareddata
+
+**/*.playground/playground.xcworkspace/xcshareddata/*
+!**/*.playground/playground.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings

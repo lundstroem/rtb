@@ -1,4 +1,0 @@
-
-- set supported orientation from cart, or workspace.
-- xcworkspace (or something) for each demo to be released to App Store independently.
-- mac target.
