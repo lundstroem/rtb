@@ -106,7 +106,15 @@ static void updateAudio(int size) {
     RTBTouch *touch = [RTBTouch new];
     [_rtbTouches addObject:touch];
 
-    // TODO: rtAudioStopAudioUnit(); on quit.
+    [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(applicationWillTerminate:)
+         name:NSApplicationWillTerminateNotification
+         object:[NSApplication sharedApplication]];
+    }
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    rtAudioStopAudioUnit();
 }
 
 - (void)initAudio {

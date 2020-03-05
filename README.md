@@ -5,7 +5,7 @@ The idea behind the RTB (Real Time Buffer) project is to provide a really simple
 drawing directly to the screen, and to write to the audio output buffer in real time using Swift.
 
 ## Workflow
-Add new files which extends RTB, and change the instance returned by RTB.instance(). 
+Add new files which extend RTB, and change the instance returned by RTB.instance(). 
 When aiming to create a new project for App Store release etc, it's advisable to copy the whole project to a new repo to avoid sharing code with other projects. Set supported Device Orientation, bundleID etc in the new project.
 
 ## Specs

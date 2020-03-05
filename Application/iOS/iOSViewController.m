@@ -151,7 +151,16 @@ static void updateAudio(int size) {
     [self initAudio];
 
     gameViewController = self;
-    // TODO: rtAudioStopAudioUnit(); on quit.
+
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationWillTerminate:)
+     name:UIApplicationWillTerminateNotification
+     object:[UIApplication sharedApplication]];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    rtAudioStopAudioUnit();
 }
 
 - (void)initAudio {
