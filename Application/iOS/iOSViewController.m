@@ -152,11 +152,14 @@ static void updateAudio(int size) {
 
     gameViewController = self;
 
+#if defined(TARGET_IOS) || defined(TARGET_TVOS)
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(applicationWillTerminate:)
      name:UIApplicationWillTerminateNotification
      object:[UIApplication sharedApplication]];
+#endif
+
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
