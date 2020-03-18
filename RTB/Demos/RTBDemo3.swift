@@ -29,7 +29,7 @@ class RTBDemo3: RTB {
     var written = false
 
     override func updateAudio(bufferSize: Int) -> [Int16] {
-        writeSamples(bufferSize: bufferSize)
+        advanceSequencers(bufferSize: bufferSize)
         return audioBuffer
     }
 

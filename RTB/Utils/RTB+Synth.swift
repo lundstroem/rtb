@@ -28,65 +28,126 @@ import Foundation
 
 extension RTB {
 
-    public func writeSamples(bufferSize: Int) {
+    public func advanceSequencers(bufferSize: Int) {
         guard bufferSize < audioBuffer.count else { return }
+        for n in 0..<audioBuffer.count {
+            audioBuffer[n] = 0
+        }
         for seq in RTBSequencer.sequencers {
-            for n in stride(from: 0, to: bufferSize, by: 2) {
-                let sample = seq.increment(bufferSize: 2)
-                audioBuffer[n] = sample
-                audioBuffer[n+1] = sample
+            for channel in seq.channels {
+                for n in stride(from: 0, to: bufferSize, by: 2) {
+                    let sample = channel.increment(bufferSize: 2, bpm: seq.bpm, loop: seq.loop)
+                    if audioBuffer[n]+sample < INT16_MAX && audioBuffer[n]+sample > INT16_MIN && audioBuffer[n+1]+sample < INT16_MAX && audioBuffer[n+1]+sample > INT16_MIN {
+                        audioBuffer[n] += sample
+                        audioBuffer[n+1] += sample
+                    }
+                }
             }
         }
+    }
+}
+
+public class RTBChannel {
+    var notes: [Double] = []
+    var beat: [Double] = []
+    var waveTypes: [RTBOscillator.WaveType] = []
+    let osc = RTBOscillator()
+    var beatCursor: Int = 0
+    var sampleCursor: Double = 0
+    var active = false
+    var amplitude = 0.3
+
+    public func increment(bufferSize: Int, bpm: Double, loop: Bool) -> Int16 {
+        guard notes.count > 0, active else { return Int16(0) }
+        let currentSampleCursor = Int(sampleCursor)
+        var currentBeat: Double = 1
+        if beatCursor < beat.count {
+            currentBeat = beat[beatCursor]
+        }
+        let sampleTimeMod = (bpm / ((RTBOscillator.sampleRate * 2) * 60.0) * Double(bufferSize)) * currentBeat
+        sampleCursor += sampleTimeMod
+        if Int(sampleCursor) > currentSampleCursor {
+            beatCursor += 1
+            if beatCursor >= beat.count {
+                beatCursor = 0
+            }
+            let newSampleCursor = Int(sampleCursor)
+            if newSampleCursor < notes.count {
+                osc.tone = notes[newSampleCursor]
+                if newSampleCursor < waveTypes.count {
+                    osc.setWaveType(waveType: waveTypes[newSampleCursor])
+                }
+            } else {
+                if !loop {
+                    active = false
+                }
+                sampleCursor = 0
+                osc.tone = notes[0]
+            }
+        }
+        return osc.incrementOsc(amplitude)
     }
 }
 
 public class RTBSequencer {
 
     public static var sequencers: [RTBSequencer] = []
-    var sampleCursor: Double = 0
     var loop: Bool = false
     var bpm: Double = 60
-    var notes: [Double] = []
-    // TODO: Change waveforms.
-    var waves: [Int] = [0]
-    let osc = RTBOscillator()
+    var channels: [RTBChannel] = []
 
-    public func increment(bufferSize: Int) -> Int16 {
-        guard notes.count > 0 else { return Int16(0) }
-        let currentSampleCursor = Int(sampleCursor)
-        let sampleTimeMod = (bpm / ((RTBOscillator.sampleRate * 2) * 60.0) * Double(bufferSize))
-        sampleCursor += sampleTimeMod
-        if Int(sampleCursor) > currentSampleCursor {
-            let newSampleCursor = Int(sampleCursor)
-            if newSampleCursor < notes.count {
-                osc.tone = notes[newSampleCursor]
-            } else {
-                sampleCursor = 0
-                osc.tone = notes[0]
-            }
+    func start() {
+        for channel in channels {
+            channel.active = true
         }
-        return osc.incrementOsc()
     }
 }
 
 public class RTBOscillator {
+
+    public enum WaveType {
+        case sine
+        case tri
+        case saw
+        case square
+        case noise
+    }
+
     private let chromaticRatio = 1.059463094359295264562
     public static let sampleRate: Double = 44100.0
 
     private let noiseTable = RTBOscillator.buildNoiseTable(size: Int(sampleRate))
-    private let triangleTable = RTBOscillator.buildSineTable(size: Int(sampleRate))
-    private let sawTable = RTBOscillator.buildSineTable(size: Int(sampleRate))
-    private let squareTable = RTBOscillator.buildSineTable(size: Int(sampleRate))
+    private let triangleTable = RTBOscillator.buildTriangleTable(size: Int(sampleRate))
+    private let sawTable = RTBOscillator.buildSawtoothTable(size: Int(sampleRate))
+    private let squareTable = RTBOscillator.buildSquareTable(size: Int(sampleRate))
     private let sineTable = RTBOscillator.buildSineTable(size: Int(sampleRate))
 
-    private let waveTable = RTBOscillator.buildSineTable(size: Int(sampleRate))
+    private lazy var waveTable = sineTable
+    private var waveType: WaveType = .sine
+
+    func setWaveType(waveType: WaveType) {
+        self.waveType = waveType
+        switch waveType {
+        case .sine:
+            waveTable = sineTable
+        case .tri:
+            waveTable = triangleTable
+        case .saw:
+            waveTable = sawTable
+        case .square:
+            waveTable = squareTable
+        case .noise:
+            waveTable = noiseTable
+        }
+    }
 
     var tone: Double = 50
+
     private var phaseIncrement: Double = 0
     private var currentPhase: Double = 0
     private var currentPhaseInt: Int = 0
 
-    func incrementOsc() -> Int16 {
+    func incrementOsc(_ amplitude: Double) -> Int16 {
         let waveformLength = Double(waveTable.count)
         let delta = frequency(pitch: tone) / RTBOscillator.sampleRate * waveformLength
         currentPhase += delta;
@@ -100,7 +161,7 @@ public class RTBOscillator {
             currentPhase = 0
             currentPhaseInt = 0
         }
-        let sample = Double(waveTable[currentPhaseInt]) * 0.3
+        let sample = Double(waveTable[currentPhaseInt]) * amplitude
         return Int16(sample)
     }
 
@@ -147,9 +208,9 @@ public class RTBOscillator {
     private static func buildTriangleTable(size: Int) -> [Int16] {
         var table: [Int16] = Array(repeating: 0, count: size)
         let phaseIncrement = (Double(INT16_MAX) * 2 / Double(size)) * 2
-        var currentPhase = Double(-INT16_MIN)
+        var currentPhase = Double(INT16_MIN)
         for i in 0...size-1 {
-            let sample = Int16(currentPhase)
+            let sample = Int16(max(min(currentPhase, Double(INT16_MAX)), Double(INT16_MIN)))
             table[i] = sample
             if i < size/2 {
                 currentPhase += phaseIncrement
