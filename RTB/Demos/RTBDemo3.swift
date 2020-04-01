@@ -26,7 +26,8 @@ SOFTWARE.
 
 class RTBDemo3: RTB {
 
-    var written = false
+    override func setup() {
+    }
 
     override func updateAudio(bufferSize: Int) -> [Int16] {
         advanceSequencers(bufferSize: bufferSize)

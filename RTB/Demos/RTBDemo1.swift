@@ -26,7 +26,8 @@ SOFTWARE.
 
 class RTBDemo1: RTB {
 
-    var written = false
+    override func setup() {
+    }
 
     override func updateAudio(bufferSize: Int) -> [Int16] {
         advanceSequencers(bufferSize: bufferSize)
@@ -43,9 +44,6 @@ class RTBDemo1: RTB {
         if let touches = touches {
             for touch in touches {
                 if touch.active {
-                    //RTBSynth.sharedInstance.osc.tone = Double(touch.y)
-                    RTBFilter.amount = Double(touch.y) * 0.01
-                    print("filter amount \(RTBFilter.amount)")
                     drawPixel(x: touch.x, y: touch.y, color: 0xffffffff)
                 }
             }

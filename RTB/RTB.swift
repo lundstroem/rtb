@@ -27,6 +27,7 @@ SOFTWARE.
 import Foundation
 
 protocol RTBProtocol {
+    func setup()
     func updateAudio(bufferSize: Int) -> [Int16]
     func update(touches: [RTBTouch]?) -> [UInt32]
 }
@@ -47,18 +48,19 @@ protocol RTBProtocol {
     let offset = 56
     let pixelCount: Int = 65536
     var raster: [UInt32] = Array(repeating: 0, count: 65536)
-    var audioBuffer: [Int16] = Array(repeating: 0, count: 8192)
-
-    @objc static func instance() -> RTB {
-        return RTBDemo2()
-    }
+    var audioBuffer: [Int16] = Array(repeating: 0, count: 4096)
+    @objc static var instance: RTB = {
+        let instance = RTBDemo2()
+        instance.setup()
+        return instance
+    }()
 }
 
 extension RTB {
 
     func drawPixel(x: Int, y: Int, color: UInt32) {
-        let index =  x + y * width
-        if index > -1 && index < pixelCount {
+        if x > 0 && y > 0 && x < width && y < height {
+            let index =  x + y * width
             raster[index] = color
         }
     }
@@ -68,11 +70,18 @@ extension RTB {
 
 @objc extension RTB: RTBProtocol {
 
+    /// Run at the start of the program.
+    func setup() {
+        assert(true, "should only be run in subclass")
+    }
+
+    /// Updated every time the audio system needs new samples. Is run on a prioritized audio thread.
     func updateAudio(bufferSize: Int) -> [Int16] {
         assert(true, "should only be run in subclass")
         return audioBuffer
     }
 
+    /// Updated every time the screen is to be redrawn, target 60fps.
     func update(touches: [RTBTouch]?) -> [UInt32] {
         assert(true, "should only be run in subclass")
         return raster

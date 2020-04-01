@@ -15,6 +15,12 @@
 		034B2021240BC0F6008CE429 /* RTAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 034B201F240BC0F6008CE429 /* RTAudioBuffer.m */; };
 		034B2024240BC177008CE429 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034B2023240BC177008CE429 /* AudioToolbox.framework */; };
 		034B2026240BC18F008CE429 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034B2025240BC18F008CE429 /* AudioToolbox.framework */; };
+		037EF1892434C97300902E9C /* RTBOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037EF1882434C97300902E9C /* RTBOscillator.swift */; };
+		037EF18A2434C97300902E9C /* RTBOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037EF1882434C97300902E9C /* RTBOscillator.swift */; };
+		037EF18C2434CA3300902E9C /* RTBChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037EF18B2434CA3300902E9C /* RTBChannel.swift */; };
+		037EF18D2434CA3300902E9C /* RTBChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037EF18B2434CA3300902E9C /* RTBChannel.swift */; };
+		037EF18F2434CA8000902E9C /* RTBEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037EF18E2434CA8000902E9C /* RTBEffects.swift */; };
+		037EF1902434CA8000902E9C /* RTBEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037EF18E2434CA8000902E9C /* RTBEffects.swift */; };
 		037F659D2402AEE1000CC996 /* RTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F65982402AEE1000CC996 /* RTB.swift */; };
 		037F659E2402AEE1000CC996 /* RTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F65982402AEE1000CC996 /* RTB.swift */; };
 		037F65A02402AEE1000CC996 /* RTBDemo4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F65992402AEE1000CC996 /* RTBDemo4.swift */; };
@@ -55,6 +61,9 @@
 		034B2025240BC18F008CE429 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		034B2027240BC1A0008CE429 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.2.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		034B2029240BC4DD008CE429 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		037EF1882434C97300902E9C /* RTBOscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBOscillator.swift; sourceTree = "<group>"; };
+		037EF18B2434CA3300902E9C /* RTBChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBChannel.swift; sourceTree = "<group>"; };
+		037EF18E2434CA8000902E9C /* RTBEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBEffects.swift; sourceTree = "<group>"; };
 		037F65952402AEE1000CC996 /* RTB-macOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTB-macOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		037F65962402AEE1000CC996 /* RTB-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTB-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		037F65972402AEE1000CC996 /* RTB-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTB-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -111,8 +120,8 @@
 		030197B0240D4DAF0071B955 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				037EF1872434C94A00902E9C /* RTBSynth */,
 				030197AC240D4B6C0071B955 /* RTB+Label.swift */,
-				03AD4E3B240E816E006A1312 /* RTB+Synth.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -145,6 +154,17 @@
 				037F65972402AEE1000CC996 /* RTB-tvOS-Bridging-Header.h */,
 			);
 			path = BridgingHeaders;
+			sourceTree = "<group>";
+		};
+		037EF1872434C94A00902E9C /* RTBSynth */ = {
+			isa = PBXGroup;
+			children = (
+				03AD4E3B240E816E006A1312 /* RTB+Synth.swift */,
+				037EF1882434C97300902E9C /* RTBOscillator.swift */,
+				037EF18B2434CA3300902E9C /* RTBChannel.swift */,
+				037EF18E2434CA8000902E9C /* RTBEffects.swift */,
+			);
+			path = RTBSynth;
 			sourceTree = "<group>";
 		};
 		037F65942402AEB3000CC996 /* RTB */ = {
@@ -347,13 +367,16 @@
 			files = (
 				63B42F161ED2063300859D09 /* Shaders.metal in Sources */,
 				034B2021240BC0F6008CE429 /* RTAudioBuffer.m in Sources */,
+				037EF18A2434C97300902E9C /* RTBOscillator.swift in Sources */,
 				037F65AA2402AEE1000CC996 /* RTBDemo3.swift in Sources */,
 				3AF7EA0A1EB64A46003BB06D /* MacRenderer.m in Sources */,
 				03265DB423E74AA900321D8C /* iOSViewController.m in Sources */,
 				3AFD656F1F71A89E0008A125 /* MacViewController.m in Sources */,
+				037EF18D2434CA3300902E9C /* RTBChannel.swift in Sources */,
 				037F65A12402AEE1000CC996 /* RTBDemo4.swift in Sources */,
 				03AD4E3D240E816E006A1312 /* RTB+Synth.swift in Sources */,
 				037F65A42402AEE1000CC996 /* RTBDemo1.swift in Sources */,
+				037EF1902434CA8000902E9C /* RTBEffects.swift in Sources */,
 				037F659E2402AEE1000CC996 /* RTB.swift in Sources */,
 				3AFD65721F71A8A10008A125 /* main.m in Sources */,
 				3AFD656C1F71A8980008A125 /* AppDelegate.m in Sources */,
@@ -374,11 +397,14 @@
 				034B2020240BC0F6008CE429 /* RTAudioBuffer.m in Sources */,
 				037F65A92402AEE1000CC996 /* RTBDemo3.swift in Sources */,
 				3AF7EA0C1EB64A46003BB06D /* MacRenderer.m in Sources */,
+				037EF1892434C97300902E9C /* RTBOscillator.swift in Sources */,
+				037EF18C2434CA3300902E9C /* RTBChannel.swift in Sources */,
 				03AD4E3C240E816E006A1312 /* RTB+Synth.swift in Sources */,
 				037F65A02402AEE1000CC996 /* RTBDemo4.swift in Sources */,
 				037F65A32402AEE1000CC996 /* RTBDemo1.swift in Sources */,
 				030197AD240D4B6C0071B955 /* RTB+Label.swift in Sources */,
 				037F659D2402AEE1000CC996 /* RTB.swift in Sources */,
+				037EF18F2434CA8000902E9C /* RTBEffects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
