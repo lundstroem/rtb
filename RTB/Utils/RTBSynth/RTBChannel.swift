@@ -1,10 +1,28 @@
-//
-//  RTBChannel.swift
-//  RTB
-//
-//  Created by Harry Lundstrom on 2020-04-01.
-//  Copyright © 2020 Apple. All rights reserved.
-//
+/*
+
+MIT License
+
+Copyright (c) 2020 Harry Lundström
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
 
 import Foundation
 
@@ -14,12 +32,12 @@ public class RTBChannel {
     var beat: [Double] = []
     let osc = RTBOscillator()
     let vibratoEffect = RTBVibratoEffect()
-    let filterEffect = RTBFilterEffect()
+    let lowpassEffect = RTBFilterEffect()
     let pitchEffect = RTBPitchEffect()
     var beatCursor: Int = 0
     var sampleCursor: Double = 0
     var active = false
-    var amplitude = 0.3
+    var amplitude = 0.5
     let effectTickLimit = 64
     var effectTickCounter = 0
     var currentNote: Double = 0
@@ -45,7 +63,7 @@ public class RTBChannel {
         }
     }
 
-    public func increment(bufferSize: Int, bpm: Double, loop: Bool) -> Int16 {
+    private func increment(bufferSize: Int, bpm: Double, loop: Bool) -> Int16 {
         guard notes.count > 0, active else { return Int16(0) }
         if !started {
             activateNote(0)
@@ -75,10 +93,15 @@ public class RTBChannel {
             }
         }
 
+        applyEffects()
+
+        return osc.incrementOsc(amplitude)
+    }
+
+    private func applyEffects() {
         effectTickCounter += 1
         if effectTickCounter >= effectTickLimit {
             effectTickCounter = 0
-
             var note: Double = currentNote
             if pitchEffect.active() {
                 note = pitchEffect.modifiedNote(note: note)
@@ -87,10 +110,7 @@ public class RTBChannel {
                 note = vibratoEffect.modifiedNote(note: note)
             }
             osc.tone = note
-            // TODO: Fix these effects.. accumulative or not?
         }
-
-        return osc.incrementOsc(amplitude)
     }
 }
 
@@ -100,7 +120,7 @@ extension RTBChannel {
 
     private func resetEffects() {
         vibratoEffect.reset()
-        filterEffect.reset()
+        lowpassEffect.reset()
         pitchEffect.reset()
     }
 
@@ -108,7 +128,7 @@ extension RTBChannel {
         resetEffects()
         if index < notes.count {
             currentNote = notes[index].note
-            osc.tone = currentNote
+            osc.tone = notes[index].note
             osc.setWaveType(waveType: notes[index].waveType)
             for effectParam in notes[index].effects{
                 switch effectParam.type {
@@ -116,10 +136,10 @@ extension RTBChannel {
                     vibratoEffect.isActive = true
                     vibratoEffect.vibratoSpeed = effectParam.param1
                     vibratoEffect.vibratoDepth = effectParam.param2
-                case .filter:
-                    filterEffect.isActive = true
-                    filterEffect.amountLeft = effectParam.param1
-                    filterEffect.amountRight = effectParam.param2
+                case .lowpass:
+                    lowpassEffect.isActive = true
+                    lowpassEffect.amountLeft = effectParam.param1
+                    lowpassEffect.amountRight = effectParam.param2
                     break
                 case .pitch:
                     pitchEffect.isActive = true
@@ -140,22 +160,22 @@ extension RTBChannel {
     public func filterLowpass(bufferSize: Int) {
         guard bufferSize < channelBuffer.count else { return }
         let srcBuffer = channelBuffer
-        channelBuffer[0] = filterEffect.lastFilterDestLeft
-        channelBuffer[1] = filterEffect.lastFilterDestRight
+        channelBuffer[0] = lowpassEffect.lastFilterDestLeft
+        channelBuffer[1] = lowpassEffect.lastFilterDestRight
         for i in stride(from: 0, to: bufferSize, by: 2) {
             let destSampleLeft = Double(channelBuffer[i])
             let srcSampleLeft = Double(srcBuffer[i])
-            let dSampleLeft: Double = (destSampleLeft-srcSampleLeft) * filterEffect.amountLeft + srcSampleLeft
+            let dSampleLeft: Double = (destSampleLeft-srcSampleLeft) * lowpassEffect.amountLeft + srcSampleLeft
             let sampleLeft: Int16 = Int16(max(min(dSampleLeft, Double(INT16_MAX)), Double(INT16_MIN)))
             channelBuffer[i+2] = sampleLeft
 
             let destSampleRight = Double(channelBuffer[i+1])
             let srcSampleRight = Double(srcBuffer[i+1])
-            let dSampleRight: Double = (destSampleRight-srcSampleRight) * filterEffect.amountRight + srcSampleRight
+            let dSampleRight: Double = (destSampleRight-srcSampleRight) * lowpassEffect.amountRight + srcSampleRight
             let sampleRight: Int16 = Int16(max(min(dSampleRight, Double(INT16_MAX)), Double(INT16_MIN)))
             channelBuffer[i+3] = sampleRight
         }
-        filterEffect.lastFilterDestLeft = channelBuffer[bufferSize-2];
-        filterEffect.lastFilterDestRight = channelBuffer[bufferSize-1];
+        lowpassEffect.lastFilterDestLeft = channelBuffer[bufferSize-2];
+        lowpassEffect.lastFilterDestRight = channelBuffer[bufferSize-1];
     }
 }

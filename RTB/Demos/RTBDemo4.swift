@@ -27,8 +27,8 @@ SOFTWARE.
 class RTBDemo4: RTB {
 
     override func setup() {
-        for x in 0...width-1 {
-            for y in 0...height-1 {
+        for x in 0...RTB.width-1 {
+            for y in 0...RTB.height-1 {
 
                 drawPixel(x: x, y: y, color: 0x333300ff)
 
@@ -44,10 +44,10 @@ class RTBDemo4: RTB {
                 if y == 0 {
                     drawPixel(x: x, y: y, color: 0xffff00ff)
                 }
-                if y == height-1 {
+                if y == RTB.height-1 {
                     drawPixel(x: x, y: y, color: 0xffffffff)
                 }
-                if x == width-1 {
+                if x == RTB.width-1 {
                     drawPixel(x: x, y: y, color: 0xff00ffff)
                 }
             }
@@ -61,7 +61,7 @@ class RTBDemo4: RTB {
     override func update(touches: [RTBTouch]?) -> [UInt32] {
         if let touches = touches {
             for touch in touches {
-                let pixel = touch.x + touch.y * width
+                let pixel = touch.x + touch.y * RTB.width
 
                 // Plot began and ended touches
 

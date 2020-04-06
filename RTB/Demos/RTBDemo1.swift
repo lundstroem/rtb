@@ -36,10 +36,7 @@ class RTBDemo1: RTB {
 
     override func update(touches: [RTBTouch]?) -> [UInt32] {
 
-        printLabel(x: offset, y: 0, string: "hello", color: 0xff00ffff, bgColor: 0x003300ff)
-        printLabel(x: offset, y: 9, string: "second line", color: 0xff00ffff, bgColor: 0x003300ff)
-        printLabel(x: offset, y: 18, string: "Long String 123#", color: 0xff00ffff, bgColor: 0x003300ff)
-        printLabel(x: offset, y: 27, string: "827367678256", color: 0xff00ffff, bgColor: 0x003300ff)
+        printLabel(x: RTB.offset, y: 0, string: "hello RTB", color: 0xff00ffff, bgColor: 0x003300ff)
 
         if let touches = touches {
             for touch in touches {

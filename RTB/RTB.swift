@@ -43,14 +43,14 @@ protocol RTBProtocol {
 }
 
 @objc public class RTB: NSObject {
-    @objc var width: Int = 256
-    @objc var height: Int = 256
-    let offset = 56
+    @objc static let width: Int = 256
+    @objc static let height: Int = 256
+    static let offset = 56
     let pixelCount: Int = 65536
     var raster: [UInt32] = Array(repeating: 0, count: 65536)
     var audioBuffer: [Int16] = Array(repeating: 0, count: 4096)
     @objc static var instance: RTB = {
-        let instance = RTBDemo2()
+        let instance = RTBreak()
         instance.setup()
         return instance
     }()
@@ -59,9 +59,15 @@ protocol RTBProtocol {
 extension RTB {
 
     func drawPixel(x: Int, y: Int, color: UInt32) {
-        if x > 0 && y > 0 && x < width && y < height {
-            let index =  x + y * width
+        if x > 0 && y > 0 && x < RTB.width && y < RTB.height {
+            let index =  x + y * RTB.width
             raster[index] = color
+        }
+    }
+
+    func cls(color: UInt32) {
+        for n in 0..<pixelCount {
+            raster[n] = color
         }
     }
 }

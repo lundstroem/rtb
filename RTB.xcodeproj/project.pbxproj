@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		030197AD240D4B6C0071B955 /* RTB+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030197AC240D4B6C0071B955 /* RTB+Label.swift */; };
 		030197AE240D4B6C0071B955 /* RTB+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030197AC240D4B6C0071B955 /* RTB+Label.swift */; };
+		030D30C0243B7FC4007FDAD5 /* RTBEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D30BF243B7FC4007FDAD5 /* RTBEntity.swift */; };
+		030D30C1243B7FC4007FDAD5 /* RTBEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D30BF243B7FC4007FDAD5 /* RTBEntity.swift */; };
 		03265DAF23E73D8400321D8C /* iOSRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03265DAE23E73D8400321D8C /* iOSRenderer.m */; };
 		03265DB423E74AA900321D8C /* iOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03265DB323E74AA900321D8C /* iOSViewController.m */; };
 		034B2020240BC0F6008CE429 /* RTAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 034B201F240BC0F6008CE429 /* RTAudioBuffer.m */; };
@@ -31,6 +33,8 @@
 		037F65A72402AEE1000CC996 /* RTBDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659B2402AEE1000CC996 /* RTBDemo2.swift */; };
 		037F65A92402AEE1000CC996 /* RTBDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659C2402AEE1000CC996 /* RTBDemo3.swift */; };
 		037F65AA2402AEE1000CC996 /* RTBDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659C2402AEE1000CC996 /* RTBDemo3.swift */; };
+		03A338FB243721D4005F519F /* RTBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A338FA243721D4005F519F /* RTBreak.swift */; };
+		03A338FC243721D4005F519F /* RTBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A338FA243721D4005F519F /* RTBreak.swift */; };
 		03AD4E3C240E816E006A1312 /* RTB+Synth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD4E3B240E816E006A1312 /* RTB+Synth.swift */; };
 		03AD4E3D240E816E006A1312 /* RTB+Synth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD4E3B240E816E006A1312 /* RTB+Synth.swift */; };
 		3ABBE2791F7319890080C72C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABBE2761F7319760080C72C /* MetalKit.framework */; };
@@ -51,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		030197AC240D4B6C0071B955 /* RTB+Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RTB+Label.swift"; sourceTree = "<group>"; };
+		030D30BF243B7FC4007FDAD5 /* RTBEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBEntity.swift; sourceTree = "<group>"; };
 		03265DAD23E73D8400321D8C /* iOSRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSRenderer.h; sourceTree = "<group>"; };
 		03265DAE23E73D8400321D8C /* iOSRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSRenderer.m; sourceTree = "<group>"; };
 		03265DB223E74AA900321D8C /* iOSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSViewController.h; sourceTree = "<group>"; };
@@ -72,6 +77,7 @@
 		037F659A2402AEE1000CC996 /* RTBDemo1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo1.swift; sourceTree = "<group>"; };
 		037F659B2402AEE1000CC996 /* RTBDemo2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo2.swift; sourceTree = "<group>"; };
 		037F659C2402AEE1000CC996 /* RTBDemo3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo3.swift; sourceTree = "<group>"; };
+		03A338FA243721D4005F519F /* RTBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBreak.swift; sourceTree = "<group>"; };
 		03AD4E3B240E816E006A1312 /* RTB+Synth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RTB+Synth.swift"; sourceTree = "<group>"; };
 		3A93731A1EBB8C17007D505D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3ABBE2761F7319760080C72C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -138,6 +144,7 @@
 		0359B78C240F913B000374B9 /* Demos */ = {
 			isa = PBXGroup;
 			children = (
+				03A338F9243721B4005F519F /* RTBreak */,
 				037F659A2402AEE1000CC996 /* RTBDemo1.swift */,
 				037F659B2402AEE1000CC996 /* RTBDemo2.swift */,
 				037F659C2402AEE1000CC996 /* RTBDemo3.swift */,
@@ -176,6 +183,15 @@
 				037F65982402AEE1000CC996 /* RTB.swift */,
 			);
 			path = RTB;
+			sourceTree = "<group>";
+		};
+		03A338F9243721B4005F519F /* RTBreak */ = {
+			isa = PBXGroup;
+			children = (
+				03A338FA243721D4005F519F /* RTBreak.swift */,
+				030D30BF243B7FC4007FDAD5 /* RTBEntity.swift */,
+			);
+			path = RTBreak;
 			sourceTree = "<group>";
 		};
 		3ABBE2751F73196D0080C72C /* Frameworks */ = {
@@ -372,10 +388,12 @@
 				3AF7EA0A1EB64A46003BB06D /* MacRenderer.m in Sources */,
 				03265DB423E74AA900321D8C /* iOSViewController.m in Sources */,
 				3AFD656F1F71A89E0008A125 /* MacViewController.m in Sources */,
+				030D30C1243B7FC4007FDAD5 /* RTBEntity.swift in Sources */,
 				037EF18D2434CA3300902E9C /* RTBChannel.swift in Sources */,
 				037F65A12402AEE1000CC996 /* RTBDemo4.swift in Sources */,
 				03AD4E3D240E816E006A1312 /* RTB+Synth.swift in Sources */,
 				037F65A42402AEE1000CC996 /* RTBDemo1.swift in Sources */,
+				03A338FC243721D4005F519F /* RTBreak.swift in Sources */,
 				037EF1902434CA8000902E9C /* RTBEffects.swift in Sources */,
 				037F659E2402AEE1000CC996 /* RTB.swift in Sources */,
 				3AFD65721F71A8A10008A125 /* main.m in Sources */,
@@ -393,11 +411,13 @@
 				037F65A62402AEE1000CC996 /* RTBDemo2.swift in Sources */,
 				3AFD65711F71A8A00008A125 /* main.m in Sources */,
 				3AFD656E1F71A89E0008A125 /* MacViewController.m in Sources */,
+				03A338FB243721D4005F519F /* RTBreak.swift in Sources */,
 				63B42F181ED2063C00859D09 /* Shaders.metal in Sources */,
 				034B2020240BC0F6008CE429 /* RTAudioBuffer.m in Sources */,
 				037F65A92402AEE1000CC996 /* RTBDemo3.swift in Sources */,
 				3AF7EA0C1EB64A46003BB06D /* MacRenderer.m in Sources */,
 				037EF1892434C97300902E9C /* RTBOscillator.swift in Sources */,
+				030D30C0243B7FC4007FDAD5 /* RTBEntity.swift in Sources */,
 				037EF18C2434CA3300902E9C /* RTBChannel.swift in Sources */,
 				03AD4E3C240E816E006A1312 /* RTB+Synth.swift in Sources */,
 				037F65A02402AEE1000CC996 /* RTBDemo4.swift in Sources */,

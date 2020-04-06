@@ -46,8 +46,7 @@ extension RTB {
 }
 
 public class RTBNote {
-    // TODO: Random params.
-    // TODO: Filter effect.
+
     var note: Double = 0
     var waveType: RTBOscillator.WaveType = .sine
     var effects: [RTBEffectParam] = []
@@ -81,65 +80,3 @@ public class RTBSequencer {
         }
     }
 }
-
-/*
-extension RTB {
-
-    func filterLowpass(bufferSize: Int) {
-        guard bufferSize < audioBuffer.count else { return }
-        let srcBuffer = audioBuffer
-
-        audioBuffer[0] = RTBFilter.lastFilterDest
-        for i in stride(from: 0, to: bufferSize, by: 1) {
-            // TODO: Need to make it work with interleaved?
-            let destSample = Double(audioBuffer[i])
-            let srcSample = Double(srcBuffer[i])
-            let dSample: Double = (destSample-srcSample) * RTBFilter.amount + srcSample
-            let sample: Int16 = Int16(max(min(dSample, Double(INT16_MAX)), Double(INT16_MIN)))
-            audioBuffer[i+1] = sample
-        }
-        RTBFilter.lastFilterDest = audioBuffer[bufferSize-1];
-    }
-}*/
-
-/*
-public class RTBFilter {
-
-    public static var amount: Double = 0
-    public static var lastFilterDest: Int16 = 0
-    func filterLowpass(src: [Int16], dest: [Int16], length: Int, amount: Double) {
-
-
-    }
-
-    /* TODO: Highpass
-     static void vlk_tr_filter_lowpass(float *src, float *dest, int length, double amount) {
-         int i;
-         if(src == dest) {
-             vlk_error_log("vlk_tr_lowpass source cannot be same as destination.");
-         }
-         /* https://www.electronicspoint.com/threads/digital-high-pass-filter.100423/ */
-         /* lowpass */
-         dest[0] = vlk_tr_last_filter_dest;
-         for(i = 0; i < length-1; i++) {
-             dest[i+1] = (dest[i]-src[i]) * /*0.99f*/amount + src[i];
-         }
-         vlk_tr_last_filter_dest = dest[length-1];
-     }
-
-     static void vlk_tr_filter_highpass(float *src, float *dest, int length, double amount) {
-         int i;
-         if(src == dest) {
-             vlk_error_log("vlk_tr_lowpass source cannot be same as destination.");
-         }
-         dest[0] = vlk_tr_last_filter_dest;
-         /* https://en.wikipedia.org/wiki/High-pass_filter */
-         /* highpass */
-         for(i = 1; i < length; i++) {
-             dest[i] = /*0.1f*/amount * (dest[i-1] + src[i] - src[i-1]);
-         }
-         vlk_tr_last_filter_dest = dest[length-1];
-     }
-     */
-}
-*/
