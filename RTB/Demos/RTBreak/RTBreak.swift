@@ -28,75 +28,31 @@ import Foundation
 
 public class RTBreak: RTB {
 
-    private var x = 0.0
-    private var y = 0.0
-    private var xV = 1.5
-    private var yV = 0.7
-
-    var color: UInt32 = 0xff00ffff
-    var bgColor: UInt32 = 0x003300ff
-
     var seq = RTBSequencer()
     var sfxSeq = RTBSequencer()
 
-    private var blockEntities: [Entity] = []
-    private var ballEntity = Entity(type: .ball, x: 100, y: 100)
-    private var padelEntity = Entity(type: .padel, x: 100, y: 200)
+    private var blockEntities: [RTBEntity] = []
+    private var ballEntity = RTBEntity(type: .ball, x: 100, y: 170)
+    private var padelEntity = RTBEntity(type: .padel, x: 150, y: 200)
+
+    private var boundsLeft: Double = Double(RTB.offset)
+    private var boundsRight: Double = Double(RTB.width-RTB.offset-1)
+
+    var elapsedTime = CFAbsoluteTimeGetCurrent()
+    var padelOffsetX: Double = 0
 
     override func setup() {
+        let sfxChannel = RTBChannel()
+        sfxChannel.notes = [RTBNote(40), RTBNote(30), RTBNote(28)]
+        sfxChannel.beat = [32]
+        sfxSeq.channels.append(sfxChannel)
+        RTBSequencer.sequencers.append(sfxSeq)
 
         for x in 0...5 {
             for y in 0...5 {
-                blockEntities.append(Entity(type: .block, x: Double(x*20), y: Double(y*20)))
+                blockEntities.append(RTBEntity(type: .block, x: Double(x*20)+70, y: Double(y*20)+20))
             }
         }
-
-        /*
-        let channel = RTBChannel()
-        channel.notes = [40, 64, 79, 60, 55, 45, 64, 79, 60, 55, 45]
-        channel.beat = [1,2]
-        channel.amplitude = 0.1
-        channel.waveTypes = [.tri, .tri, .tri, .tri, .tri, .tri]
-        seq.channels.append(channel)
- */
-
-        let vibratoNote = RTBNote(60)
-        vibratoNote.waveType = .square
-
-        let vibratoEffectParam = RTBEffectParam()
-        vibratoEffectParam.type = .vibrato
-        vibratoEffectParam.param1 = 4
-        vibratoEffectParam.param2 = 4
-
-        let filterEffectParam = RTBEffectParam()
-        filterEffectParam.type = .lowpass
-        filterEffectParam.param1 = 0.99
-        filterEffectParam.param2 = 0.99
-
-        let pitchEffectParam = RTBEffectParam()
-        pitchEffectParam.type = .pitch
-        pitchEffectParam.param1 = -10
-
-        vibratoNote.effects.append(vibratoEffectParam)
-        vibratoNote.effects.append(filterEffectParam)
-        vibratoNote.effects.append(pitchEffectParam)
-
-        let channel2 = RTBChannel()
-        channel2.notes = [vibratoNote, RTBNote(30), RTBNote(38), RTBNote(50), RTBNote(52)]
-        channel2.beat = [1,1]
-        channel2.amplitude = 0.05
-        seq.channels.append(channel2)
-
-        seq.loop = true
-        seq.bpm = 30
-        seq.play()
-        RTBSequencer.sequencers.append(seq)
-
-        let sfx = RTBChannel()
-        sfx.notes = [RTBNote(40), RTBNote(30), RTBNote(28)]
-        sfx.beat = [32]
-        sfxSeq.channels.append(sfx)
-        RTBSequencer.sequencers.append(sfxSeq)
     }
 
     override func updateAudio(bufferSize: Int) -> [Int16] {
@@ -105,29 +61,86 @@ public class RTBreak: RTB {
     }
 
     override func update(touches: [RTBTouch]?) -> [UInt32] {
+        if let touches = touches {
+            if touches.count > 0 && touches[0].active {
+                let touchX = Double(touches[0].x)
+                if touches[0].began {
+                    padelOffsetX = padelEntity.x - touchX
+                }
+                padelEntity.x = touchX + padelOffsetX
+                if padelEntity.x < boundsLeft {
+                    padelEntity.x = boundsLeft
+                }
+                if padelEntity.x+padelEntity.w > boundsRight {
+                    padelEntity.x = boundsRight-padelEntity.w
+                }
+            }
+        }
         updateEntities()
         return raster
     }
 
+    func updateBallBounds() {
+        if ballEntity.x > boundsRight-ballEntity.w {
+            ballEntity.x = boundsRight-ballEntity.w
+            ballEntity.xV = -ballEntity.xV
+        }
+        if ballEntity.y > Double(RTB.height)-ballEntity.h {
+            ballEntity.y = Double(RTB.height)-ballEntity.h
+            ballEntity.yV = -ballEntity.yV
+        }
+        if ballEntity.x < boundsLeft {
+            ballEntity.x = boundsLeft
+            ballEntity.xV = -ballEntity.xV
+        }
+        if ballEntity.y < 0 {
+            ballEntity.y = 0
+            ballEntity.yV = -ballEntity.yV
+        }
+        if ballEntity.y+ballEntity.w > padelEntity.y &&
+            ballEntity.yV > 0 &&
+            (ballEntity.y+ballEntity.w - padelEntity.y) < abs(ballEntity.yV) {
+            if !(ballEntity.x+ballEntity.w < padelEntity.x || ballEntity.x > padelEntity.x+padelEntity.w) {
+                ballEntity.y = padelEntity.y-ballEntity.h
+                ballEntity.yV = -ballEntity.yV
+            }
+        }
+    }
+
     func updateEntities() {
-        cls(color: 0)
+        cls(color: 0x222222ff)
+        ballEntity.update()
+        updateBallBounds()
+
         for entity in blockEntities {
-            entity.update()
+            guard entity.active else { continue }
+            if entity.intersects(ballEntity) {
+                entity.setHit(ballEntity)
+                ballEntity.setHit(entity)
+                sfxSeq.play()
+            }
             renderEntity(entity)
         }
 
-        ballEntity.update()
+        for yPos in 0..<RTB.height {
+            drawPixel(x: Int(boundsLeft), y: yPos, color: RTBreak.palette[3])
+            drawPixel(x: Int(boundsRight), y: yPos, color: RTBreak.palette[3])
+        }
+
         renderEntity(ballEntity)
         renderEntity(padelEntity)
+
+        for entity in blockEntities {
+            entity.hit = false
+        }
     }
 
-    func renderEntity(_ entity: Entity) {
-        let gfx = entity.gfx()
-        for yPos in 0...gfx.count-1 {
-            for xPos in 0...gfx[yPos].count-1 {
-            var color: UInt32 = RTBreak.palette[entity.paletteIndex]
-                if gfx[yPos][xPos] == 0 {
-                    color = RTBreak.palette[0]
+    func renderEntity(_ entity: RTBEntity) {
+        for yPos in 0...Int(entity.h)-1 {
+            for xPos in 0...Int(entity.w)-1 {
+                var color: UInt32 = RTBreak.palette[entity.paletteIndex]
+                if entity.hit {
+                    color = RTBreak.palette[15]
                 }
                 drawPixel(x: xPos+Int(entity.x), y: Int(entity.y)+yPos, color: color)
             }
@@ -153,28 +166,5 @@ public class RTBreak: RTB {
                                            0xfffc36ff,
                                            0xcacacaff,
                                            0xffffffff]
-
-    public static let gfxBall = [[0, 0, 1, 1, 1, 1, 0, 0],
-                                 [0, 1, 1, 1, 1, 1, 1, 0],
-                                 [1, 1, 1, 1, 1, 1, 1, 1],
-                                 [1, 1, 1, 1, 1, 1, 1, 1],
-                                 [1, 1, 1, 1, 1, 1, 1, 1],
-                                 [1, 1, 1, 1, 1, 1, 1, 1],
-                                 [0, 1, 1, 1, 1, 1, 1, 0],
-                                 [0, 0, 1, 1, 1, 1, 0, 0]]
-
-    public static let gfxBlock = [[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                  [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]]
-
-    public static let gfxPadel = [[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                  [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]]
 
 }

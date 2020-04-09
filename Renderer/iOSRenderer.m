@@ -51,12 +51,12 @@ static float scaling = 5.3f;
 
 - (void)increaseScaling {
     //scaling += 0.0001;
-    NSLog(@"inc scaling: %f", scaling);
+    //NSLog(@"inc scaling: %f", scaling);
 }
 
 - (void)decreaseScaling {
     //scaling -= 0.0001;
-    NSLog(@"dec scaling: %f", scaling);
+    //NSLog(@"dec scaling: %f", scaling);
 }
 
 - (void)setupScaling {

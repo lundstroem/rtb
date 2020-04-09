@@ -50,6 +50,12 @@ class RTBDemo4: RTB {
                 if x == RTB.width-1 {
                     drawPixel(x: x, y: y, color: 0xff00ffff)
                 }
+                if x == RTB.offset {
+                    drawPixel(x: x, y: y, color: 0xffffffff)
+                }
+                if x == RTB.width - RTB.offset-1 {
+                    drawPixel(x: x, y: y, color: 0xffffffff)
+                }
             }
         }
     }

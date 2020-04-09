@@ -326,8 +326,9 @@
 				TargetAttributes = {
 					3AF7E9C71EB64A46003BB06D = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = QM9YTQA8XQ;
 						LastSwiftMigration = 1130;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					3AF7E9F71EB64A46003BB06D = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -561,9 +562,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QM9YTQA8XQ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TARGET_IOS,
 					"$(inherited)",
@@ -587,9 +588,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QM9YTQA8XQ;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_IOS;
 				INFOPLIST_FILE = Application/iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

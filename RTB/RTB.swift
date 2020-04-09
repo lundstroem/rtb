@@ -59,7 +59,7 @@ protocol RTBProtocol {
 extension RTB {
 
     func drawPixel(x: Int, y: Int, color: UInt32) {
-        if x > 0 && y > 0 && x < RTB.width && y < RTB.height {
+        if x > -1 && y > -1 && x < RTB.width && y < RTB.height {
             let index =  x + y * RTB.width
             raster[index] = color
         }

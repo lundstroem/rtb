@@ -352,6 +352,7 @@ static void updateAudio(int size) {
     }
 }
 
+
 - (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
     for (UITouch *touch in touches) {
         CGPoint pt = [touch locationInView: [touch view]];

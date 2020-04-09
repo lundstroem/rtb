@@ -26,15 +26,16 @@ SOFTWARE.
 
 import Foundation
 
-enum EntityType {
+enum RTBEntityType {
     case ball
     case padel
     case block
 }
 
-class Entity {
+class RTBEntity {
 
-    let type: EntityType
+    let type: RTBEntityType
+    var hp: Int = 1
     var x: Double = 0
     var y: Double = 0
     var w: Double = 0
@@ -42,23 +43,24 @@ class Entity {
     var xV: Double = 0
     var yV: Double = 0
     var active = true
+    var hit = false
     var paletteIndex = 0
 
-    init(type: EntityType, x: Double, y: Double) {
+    init(type: RTBEntityType, x: Double, y: Double) {
         self.type = type
         self.x = x
         self.y = y
         switch type {
         case .ball:
             paletteIndex = 2
-            w = 8
-            h = 8
-            xV = 1.367
-            yV = 1.414
+            w = 16
+            h = 16
+            xV = Double.random(in: 0..<3)+2
+            yV = -(Double.random(in: 0..<2)+2)
         case .padel:
             paletteIndex = 3
-            w = 16
-            h = 8
+            w = 32
+            h = 2
         case .block:
             paletteIndex = 4
             w = 16
@@ -66,34 +68,10 @@ class Entity {
         }
     }
 
-    func gfx() -> [[Int]] {
-        switch type {
-        case .ball:
-            return RTBreak.gfxBall
-        case .padel:
-            return RTBreak.gfxPadel
-        case .block:
-            return RTBreak.gfxBlock
-        }
-    }
-
     func update() {
         switch type {
         case .ball:
-            x += xV
-            y += yV
-            if x > Double(RTB.width)-8 {
-                xV = -xV
-            }
-            if y > Double(RTB.height)-8 {
-                yV = -yV
-            }
-            if x < 0 {
-                xV = -xV
-            }
-            if y < 0 {
-                yV = -yV
-            }
+            pendingMove()
         case .padel:
             break
         case .block:
@@ -101,13 +79,76 @@ class Entity {
         }
     }
 
-    func interSects(entity: Entity) -> Bool {
-        if entity.x+entity.w > x+w ||
-            entity.x+entity.w < x {
+    func setHit(_ entity: RTBEntity) {
+        switch type {
+        case .ball:
+            calibrateBallCollision(entity)
+            break
+        case .padel:
+            break
+        case .block:
+            hit = true
+            hp -= 1
+            if hp == 0 {
+                active = false
+            }
+            break
+        }
+    }
+
+    func pendingMove() {
+        x += xV
+        y += yV
+    }
+
+    func calibrateBallCollision(_ entity: RTBEntity) {
+
+        // Reset last move
+        x -= xV
+        y -= yV
+
+        let xIncrement = xV / 10
+        let yIncrement = yV / 10
+        var intersected = false
+
+        // Increment steps before collision
+        while !intersected {
+            x += xIncrement
+            y += yIncrement
+            let isIntersected = intersects(entity)
+            if isIntersected {
+                intersected = true
+                ballCollisionResponse(entity: entity)
+                x -= xIncrement
+                y -= yIncrement
+            }
+        }
+    }
+
+    func ballCollisionResponse(entity: RTBEntity) {
+        let centerX = x + w/2
+        let centerY = y + h/2
+        let entityCenterX = entity.x + entity.w/2
+        let entityCenterY = entity.y + entity.h/2
+
+        let xDiff = abs(centerX - entityCenterX)
+        let yDiff = abs(centerY - entityCenterY)
+
+        if xDiff == yDiff {
+            xV = -xV
+            yV = -yV
+        } else if xDiff > yDiff {
+            xV = -xV
+        } else {
+            yV = -yV
+        }
+    }
+
+    func intersects(_ entity: RTBEntity) -> Bool {
+        if entity.x+entity.w < x || entity.x > x+w {
             return false
         }
-        if entity.y+entity.h > y+h ||
-            entity.y+entity.h < y {
+        if entity.y+entity.h < y || entity.y > y+h {
             return false
         }
         return true
