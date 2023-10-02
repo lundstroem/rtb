@@ -64,7 +64,7 @@ class RTBDemo4: RTB {
         return audioBuffer
     }
 
-    override func update(touches: [RTBTouch]?) -> [UInt32] {
+    override func update(touches: [RTBTouch]?) {
         if let touches = touches {
             for touch in touches {
                 let pixel = touch.x + touch.y * RTB.width
@@ -82,6 +82,5 @@ class RTBDemo4: RTB {
                 }
             }
         }
-        return raster
     }
 }

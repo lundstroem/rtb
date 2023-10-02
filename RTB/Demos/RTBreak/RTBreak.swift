@@ -47,7 +47,9 @@ public class RTBreak: RTB {
         sfxChannel.beat = [32]
         sfxSeq.channels.append(sfxChannel)
         RTBSequencer.sequencers.append(sfxSeq)
-
+        
+        //bytesPointer.storeBytes(of: 0x00000000, as: UInt32.self)
+        
         for x in 0...5 {
             for y in 0...5 {
                 blockEntities.append(RTBEntity(type: .block, x: Double(x*20)+70, y: Double(y*20)+20))
@@ -60,7 +62,7 @@ public class RTBreak: RTB {
         return audioBuffer
     }
 
-    override func update(touches: [RTBTouch]?) -> [UInt32] {
+    override func update(touches: [RTBTouch]?) {
         if let touches = touches {
             if touches.count > 0 && touches[0].active {
                 let touchX = Double(touches[0].x)
@@ -77,7 +79,6 @@ public class RTBreak: RTB {
             }
         }
         updateEntities()
-        return raster
     }
 
     func updateBallBounds() {
@@ -132,6 +133,17 @@ public class RTBreak: RTB {
 
         for entity in blockEntities {
             entity.hit = false
+        }
+
+        let randomInt = 0xffff00ff
+        let randomInt2 = 0xffffff00
+
+        for n in 0..<pixelCount {
+
+            
+            //drawPixel(x: xPos, y: yPos, color: randomInt)
+            let randomInt = UInt32.random(in: 0..<UINT32_MAX)
+            bytesPointer.advanced(by: n*4).copyMemory(from: [randomInt], byteCount: 4)
         }
     }
 

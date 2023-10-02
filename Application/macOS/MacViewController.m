@@ -126,7 +126,7 @@ static void updateAudio(int size) {
 }
 
 - (void)update {
-    self.rasterObjC = [self.rtb updateWithTouches:_rtbTouches];
+    [self.rtb updateWithTouches:_rtbTouches];
     RTBTouch *touch = _rtbTouches.firstObject;
 
     if (touch.began) {
@@ -138,13 +138,18 @@ static void updateAudio(int size) {
     }
 
     unsigned int *pixels = _renderer.pixels;
+    
+    unsigned int *bytes_pointer = self.rtb.bytesPointer;
+
     if (pixels) {
         for (int i = 0; i < 65536; i++) {
-            unsigned int c = [[self.rasterObjC objectAtIndex:i] intValue];
-            unsigned char red = c & 0xff;
-            unsigned char green = (c >> (8)) & 0xff;
-            unsigned char blue = (c >> (16)) & 0xff;
-            unsigned char alpha = (c >> (24)) & 0xff;
+            // TODO: RGBA BGRA conversion needed?
+
+            unsigned int c = bytes_pointer[i];
+            unsigned int red = c & 0xff;
+            unsigned int green = (c >> (8)) & 0xff;
+            unsigned int blue = (c >> (16)) & 0xff;
+            unsigned int alpha = (c >> (24)) & 0xff;
             pixels[i] = (red << 24) | (green << 16) | (blue << 8) | alpha;
         }
     }

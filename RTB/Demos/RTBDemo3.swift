@@ -34,7 +34,7 @@ class RTBDemo3: RTB {
         return audioBuffer
     }
 
-    override func update(touches: [RTBTouch]?) -> [UInt32] {
+    override func update(touches: [RTBTouch]?) {
 
         printLabel(x: RTB.offset, y: 0, string: "hello", color: 0xff00ffff, bgColor: 0x003300ff)
         printLabel(x: RTB.offset, y: 9, string: "second line", color: 0xff00ffff, bgColor: 0x003300ff)
@@ -48,6 +48,5 @@ class RTBDemo3: RTB {
                 }
             }
         }
-        return raster
     }
 }

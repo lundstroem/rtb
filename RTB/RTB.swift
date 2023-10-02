@@ -29,7 +29,8 @@ import Foundation
 protocol RTBProtocol {
     func setup()
     func updateAudio(bufferSize: Int) -> [Int16]
-    func update(touches: [RTBTouch]?) -> [UInt32]
+    func update(touches: [RTBTouch]?)
+    func willTerminate()
 }
 
 @objcMembers public class RTBTouch: NSObject {
@@ -47,7 +48,9 @@ protocol RTBProtocol {
     @objc static let height: Int = 256
     static let offset = 56
     let pixelCount: Int = 65536
-    var raster: [UInt32] = Array(repeating: 0, count: 65536)
+    @objc let bytesPointer = UnsafeMutableRawPointer.allocate(byteCount: 65536*4,
+                                                              alignment: MemoryLayout<UInt32>.alignment)
+    
     var audioBuffer: [Int16] = Array(repeating: 0, count: 4096)
     @objc static var instance: RTB = {
         let instance = RTBreak()
@@ -61,13 +64,13 @@ extension RTB {
     func drawPixel(x: Int, y: Int, color: UInt32) {
         if x > -1 && y > -1 && x < RTB.width && y < RTB.height {
             let index =  x + y * RTB.width
-            raster[index] = color
+            bytesPointer.advanced(by: index*4).copyMemory(from: [color], byteCount: 4)
         }
     }
 
     func cls(color: UInt32) {
         for n in 0..<pixelCount {
-            raster[n] = color
+            bytesPointer.advanced(by: n*4).copyMemory(from: [color], byteCount: 4)
         }
     }
 }
@@ -88,8 +91,11 @@ extension RTB {
     }
 
     /// Updated every time the screen is to be redrawn, target 60fps.
-    func update(touches: [RTBTouch]?) -> [UInt32] {
+    func update(touches: [RTBTouch]?) {
         assert(true, "should only be run in subclass")
-        return raster
+    }
+    
+    func willTerminate() {
+        bytesPointer.deallocate()
     }
 }
