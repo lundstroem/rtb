@@ -60,8 +60,7 @@ class RTBDemo4: RTB {
         }
     }
 
-    override func updateAudio(bufferSize: Int) -> [Int16] {
-        return audioBuffer
+    override func updateAudio(bufferSize: Int) {
     }
 
     override func update(touches: [RTBTouch]?) {

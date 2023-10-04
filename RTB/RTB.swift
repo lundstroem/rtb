@@ -27,8 +27,7 @@ SOFTWARE.
 import Foundation
 
 protocol RTBProtocol {
-    func setup()
-    func updateAudio(bufferSize: Int) -> [Int16]
+    func updateAudio(bufferSize: Int)
     func update(touches: [RTBTouch]?)
     func willTerminate()
 }
@@ -51,12 +50,28 @@ protocol RTBProtocol {
     @objc let bytesPointer = UnsafeMutableRawPointer.allocate(byteCount: 65536*4,
                                                               alignment: MemoryLayout<UInt32>.alignment)
     
-    var audioBuffer: [Int16] = Array(repeating: 0, count: 4096)
+
+    let audioBufferCount = 8192
+    @objc let audioBytesPointer = UnsafeMutableRawPointer.allocate(byteCount: 8192*2,
+                                                                   alignment: MemoryLayout<Int16>.alignment)
     @objc static var instance: RTB = {
         let instance = RTBreak()
         instance.setup()
         return instance
     }()
+
+    /// Run at the start of the program.
+    func setup() {
+        bytesPointer.storeBytes(of: 0x00000000, as: UInt32.self)
+        for n in 0..<65536 {
+            bytesPointer.advanced(by: n*4).copyMemory(from: [0], byteCount: 4)
+        }
+
+        audioBytesPointer.storeBytes(of: 0x00000000, as: Int16.self)
+        for n in 0..<8192 {
+            bytesPointer.advanced(by: n*2).copyMemory(from: [0], byteCount: 2)
+        }
+    }
 }
 
 extension RTB {
@@ -79,15 +94,9 @@ extension RTB {
 
 @objc extension RTB: RTBProtocol {
 
-    /// Run at the start of the program.
-    func setup() {
-        assert(true, "should only be run in subclass")
-    }
-
     /// Updated every time the audio system needs new samples. Is run on a prioritized audio thread.
-    func updateAudio(bufferSize: Int) -> [Int16] {
+    func updateAudio(bufferSize: Int) {
         assert(true, "should only be run in subclass")
-        return audioBuffer
     }
 
     /// Updated every time the screen is to be redrawn, target 60fps.
@@ -97,5 +106,6 @@ extension RTB {
     
     func willTerminate() {
         bytesPointer.deallocate()
+        audioBytesPointer.deallocate()
     }
 }

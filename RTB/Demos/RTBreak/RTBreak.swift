@@ -42,14 +42,14 @@ public class RTBreak: RTB {
     var padelOffsetX: Double = 0
 
     override func setup() {
+        super.setup()
+        
         let sfxChannel = RTBChannel()
         sfxChannel.notes = [RTBNote(40), RTBNote(30), RTBNote(28)]
         sfxChannel.beat = [32]
         sfxSeq.channels.append(sfxChannel)
         RTBSequencer.sequencers.append(sfxSeq)
-        
-        //bytesPointer.storeBytes(of: 0x00000000, as: UInt32.self)
-        
+
         for x in 0...5 {
             for y in 0...5 {
                 blockEntities.append(RTBEntity(type: .block, x: Double(x*20)+70, y: Double(y*20)+20))
@@ -57,9 +57,8 @@ public class RTBreak: RTB {
         }
     }
 
-    override func updateAudio(bufferSize: Int) -> [Int16] {
+    override func updateAudio(bufferSize: Int) {
         advanceSequencers(bufferSize: bufferSize)
-        return audioBuffer
     }
 
     override func update(touches: [RTBTouch]?) {
@@ -138,13 +137,13 @@ public class RTBreak: RTB {
         let randomInt = 0xffff00ff
         let randomInt2 = 0xffffff00
 
-        for n in 0..<pixelCount {
+        //for n in 0..<pixelCount {
 
             
             //drawPixel(x: xPos, y: yPos, color: randomInt)
-            let randomInt = UInt32.random(in: 0..<UINT32_MAX)
-            bytesPointer.advanced(by: n*4).copyMemory(from: [randomInt], byteCount: 4)
-        }
+            //let randomInt = UInt32.random(in: 0..<UINT32_MAX)
+            //bytesPointer.advanced(by: n*4).copyMemory(from: [randomInt], byteCount: 4)
+        //}
     }
 
     func renderEntity(_ entity: RTBEntity) {

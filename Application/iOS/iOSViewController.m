@@ -107,8 +107,7 @@ OSStatus iOSRenderCallback(void *userData,
 
 static void updateAudio(int size) {
     if (gameViewController != NULL) {
-        NSArray<NSNumber *> *r = [gameViewController.rtb updateAudioWithBufferSize:size];
-        gameViewController.audioBufferObjC = r;
+        [gameViewController.rtb updateAudioWithBufferSize:size];
     }
 }
 
@@ -213,7 +212,6 @@ static void updateAudio(int size) {
 - (void)update {
 
     [self checkActiveTouches];
-    self.rasterObjC = [self.rtb updateWithTouches:_rtbTouches];
 
     unsigned int *pixels = _renderer.pixels;
     if (pixels) {

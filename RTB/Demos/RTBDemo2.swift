@@ -46,9 +46,8 @@ class RTBDemo2: RTB {
         RTBSequencer.sequencers.append(sfxSeq)
     }
 
-    override func updateAudio(bufferSize: Int) -> [Int16] {
+    override func updateAudio(bufferSize: Int) {
         advanceSequencers(bufferSize: bufferSize)
-        return audioBuffer
     }
 
     override func update(touches: [RTBTouch]?) {

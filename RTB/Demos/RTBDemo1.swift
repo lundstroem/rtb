@@ -29,9 +29,8 @@ class RTBDemo1: RTB {
     override func setup() {
     }
 
-    override func updateAudio(bufferSize: Int) -> [Int16] {
+    override func updateAudio(bufferSize: Int) {
         advanceSequencers(bufferSize: bufferSize)
-        return audioBuffer
     }
 
     override func update(touches: [RTBTouch]?) {

@@ -59,11 +59,15 @@ OSStatus renderCallback(void *userData,
 
     updateAudio(totalFrames);
 
+    SInt16 *audio_bytes_pointer = (SInt16 *)gameViewController.rtb.audioBytesPointer;
+
+
     // write samples
     for (int i = 0; i < totalFrames; i += 2) {
         double amp = 0.3;
-        inputFrames[i] = [[gameViewController.audioBufferObjC objectAtIndex:i] intValue] * amp;
-        inputFrames[i+1] = [[gameViewController.audioBufferObjC objectAtIndex:i+1] intValue] * amp;
+
+        inputFrames[i] = audio_bytes_pointer[i] * amp;
+        inputFrames[i+1] = audio_bytes_pointer[i+1] * amp;
     }
 
     return noErr;
@@ -71,8 +75,7 @@ OSStatus renderCallback(void *userData,
 
 static void updateAudio(int size) {
     if (gameViewController != NULL) {
-        NSArray<NSNumber *> *r = [gameViewController.rtb updateAudioWithBufferSize:size];
-        gameViewController.audioBufferObjC = r;
+        [gameViewController.rtb updateAudioWithBufferSize:size];
     }
 }
 

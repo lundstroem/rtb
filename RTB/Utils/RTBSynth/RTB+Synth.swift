@@ -29,16 +29,19 @@ import Foundation
 extension RTB {
 
     public func advanceSequencers(bufferSize: Int) {
-        guard bufferSize < audioBuffer.count else { return }
-        for n in 0..<bufferSize {
-            audioBuffer[n] = 0
-        }
+        guard bufferSize < audioBufferCount else { return }
+
         for seq in RTBSequencer.sequencers {
+            let p = audioBytesPointer.assumingMemoryBound(to: Int16.self)
+            for n in 0..<bufferSize {
+                p[n] = 0
+            }
+
             for channel in seq.channels {
                 guard channel.active else { continue }
                 channel.advanceChannel(bufferSize: bufferSize, bpm: seq.bpm, loop: seq.loop)
                 for n in 0..<bufferSize {
-                    audioBuffer[n] += channel.channelBuffer[n]
+                    p[n] &+= channel.channelBuffer[n]
                 }
             }
         }
