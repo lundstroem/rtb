@@ -41,8 +41,6 @@ SOFTWARE.
 
 @property (nonatomic, strong) RTB *rtb;
 @property (nonatomic, strong) NSMutableArray<RTBTouch *> *rtbTouches;
-@property (nonatomic, strong) NSArray<NSNumber *> *rasterObjC;
-@property (nonatomic, strong) NSArray<NSNumber *> *audioBufferObjC;
 
 @end
 
@@ -95,11 +93,14 @@ OSStatus iOSRenderCallback(void *userData,
 
     updateAudio(totalFrames);
 
+    SInt16 *audio_bytes_pointer = (SInt16 *)gameViewController.rtb.audioBytesPointer;
+
     // write samples
     for (int i = 0; i < totalFrames; i += 2) {
         double amp = 0.3;
-        inputFrames[i] = [[gameViewController.audioBufferObjC objectAtIndex:i] intValue] * amp;
-        inputFrames[i+1] = [[gameViewController.audioBufferObjC objectAtIndex:i+1] intValue] * amp;
+
+        inputFrames[i] = audio_bytes_pointer[i] * amp;
+        inputFrames[i+1] = audio_bytes_pointer[i+1] * amp;
     }
 
     return noErr;
@@ -181,6 +182,8 @@ static void updateAudio(int size) {
         size = screenWidth;
     }
 
+    // TODO: Fix scaling for screen and input.
+
     // iPhone X
     if(size == 812) {
         w = 1066.600000;
@@ -213,15 +216,23 @@ static void updateAudio(int size) {
 
     [self checkActiveTouches];
 
+    [self.rtb updateWithTouches:_rtbTouches];
+
     unsigned int *pixels = _renderer.pixels;
+
+    unsigned int *bytes_pointer = self.rtb.bytesPointer;
+
     if (pixels) {
         for (int i = 0; i < 65536; i++) {
-            unsigned int c = [[self.rasterObjC objectAtIndex:i] intValue];
-            unsigned char red = c & 0xff;
-            unsigned char green = (c >> (8)) & 0xff;
-            unsigned char blue = (c >> (16)) & 0xff;
-            unsigned char alpha = (c >> (24)) & 0xff;
+            // TODO: RGBA BGRA conversion needed?
+
+            unsigned int c = bytes_pointer[i];
+            unsigned int red = c & 0xff;
+            unsigned int green = (c >> (8)) & 0xff;
+            unsigned int blue = (c >> (16)) & 0xff;
+            unsigned int alpha = (c >> (24)) & 0xff;
             pixels[i] = (red << 24) | (green << 16) | (blue << 8) | alpha;
+            //pixels[i] = rand() % INT32_MAX;
         }
     }
 }

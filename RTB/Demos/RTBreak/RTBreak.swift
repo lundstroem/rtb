@@ -117,6 +117,7 @@ public class RTBreak: RTB {
             if entity.intersects(ballEntity) {
                 entity.setHit(ballEntity)
                 ballEntity.setHit(entity)
+                // TODO: Sounds like effects is not retriggered on hit. Investigate.
                 sfxSeq.play()
             }
             renderEntity(entity)

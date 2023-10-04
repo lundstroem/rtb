@@ -43,7 +43,8 @@
 static unsigned int *pixels = NULL;
 static int width = 256;
 static int height = 256;
-static float scaling = 5.3f;
+//static float scaling = 5.3f;
+static float scaling = 1.0f;
 
 - (void *)pixels {
     return pixels;
@@ -71,6 +72,52 @@ static float scaling = 5.3f;
 
     NSLog(@"size %f", size);
 
+    NSUInteger scale = UIScreen.mainScreen.scale;
+    CGSize screenSize = UIScreen.mainScreen.fixedCoordinateSpace.bounds.size;
+    NSLog(@"w:%f h:%f scale:%lu", screenSize.width, screenSize.height, (unsigned long)scale);
+
+    CGFloat physicalWidth = screenSize.width * scale;
+
+    CGFloat rawScaling = physicalWidth / 256.0;
+
+    CGFloat decimals = fmodf(rawScaling, 1.0);
+
+    // TODO: Determine which devices give incorrect physical size when using screenWidth * scale and hardcode those.
+
+    // Make uniform virtual pixel sizes.
+    if (decimals > 0.90) {
+        // It's ok to round up in this case as we won't lose "too" much of the screen.
+        scaling = ceil(rawScaling);
+    } else {
+        scaling = floor(rawScaling);
+    }
+
+    // Would it make sense to rewrite touch to use the same system? Would make if less prone to differences hopefully.
+    // If using less pixelsize (rounding down) touch conversion could use this as well by sizing down 256 to the correct size. (4,60546875 == 256, 4.0 == 235.8) and set offsets on start and end to center it. Would need to convert touch to physical width grid etc.
+
+    // iPhone 15 2556 × 1179
+
+
+/*
+
+    // pixel size
+    1179 / 256 = 4,60546875
+
+    4 * 256 = 1024;
+
+ */
+    //scaling = 3*2;
+
+
+    /*
+
+     if we can get the physical width of the device, we will be able to
+     make a scaling with correct pixel sizes.
+     However using screenWidth * sizetype might give the wrong value..
+
+     */
+
+    /*
     // iPhone X
     if(size == 812) {
         scaling = 7.936213f;
@@ -83,6 +130,7 @@ static float scaling = 5.3f;
     } else {
         scaling = 5.3f;
     }
+    */
 }
 
 - (id<MTLTexture>)createTexture {

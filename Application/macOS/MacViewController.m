@@ -61,7 +61,6 @@ OSStatus renderCallback(void *userData,
 
     SInt16 *audio_bytes_pointer = (SInt16 *)gameViewController.rtb.audioBytesPointer;
 
-
     // write samples
     for (int i = 0; i < totalFrames; i += 2) {
         double amp = 0.3;
