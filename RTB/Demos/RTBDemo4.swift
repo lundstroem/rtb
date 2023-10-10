@@ -26,7 +26,18 @@ SOFTWARE.
 
 class RTBDemo4: RTB {
 
+    var seq = RTBSequencer()
+    var sfxSeq = RTBSequencer()
+
     override func setup() {
+        super.setup()
+
+        let sfxChannel = RTBChannel()
+        sfxChannel.notes = [RTBNote(40), RTBNote(30), RTBNote(28)]
+        sfxChannel.beat = [32]
+        sfxSeq.channels.append(sfxChannel)
+        RTBSequencer.sequencers.append(sfxSeq)
+
         for x in 0...RTB.width-1 {
             for y in 0...RTB.height-1 {
 
@@ -61,6 +72,7 @@ class RTBDemo4: RTB {
     }
 
     override func updateAudio(bufferSize: Int) {
+        advanceSequencers(bufferSize: bufferSize)
     }
 
     override func update(touches: [RTBTouch]?) {

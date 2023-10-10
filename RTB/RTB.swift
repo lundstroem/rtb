@@ -55,7 +55,8 @@ protocol RTBProtocol {
     @objc let audioBytesPointer = UnsafeMutableRawPointer.allocate(byteCount: 8192*2,
                                                                    alignment: MemoryLayout<Int16>.alignment)
     @objc static var instance: RTB = {
-        let instance = RTBreak()
+        //let instance = RTBreak()
+        let instance = RTBDemo4()
         instance.setup()
         return instance
     }()

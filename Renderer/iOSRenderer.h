@@ -24,6 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, weak) id<iOSRendererDelegate> delegate;
 @property (nullable, nonatomic, strong) NSArray<NSNumber *> *rasterObjC;
 
+- (float)physicalWidth;
+- (float)physicalHeight;
+- (float)mainScreenScale;
+- (float)scaling;
+- (float)rawScaling;
 - (nullable void *)pixels;
 - (void)increaseScaling;
 - (void)decreaseScaling;

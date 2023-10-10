@@ -44,20 +44,6 @@ SOFTWARE.
 
 @end
 
-static CGFloat x = 0;
-static CGFloat y = 0;
-static CGFloat w = 0;
-static CGFloat h = 0;
-static CGFloat screenWidth = 0;
-static CGFloat screenHeight = 0;
-
-static const double screen_scaling_factor = 1.6;
-static const double screen_scaling_factor_reverse = 0.625;
-static const double screen_16_9_width_factor = 1;
-
-static int visibleTexPortraitWidth = 256;
-static int visibleTexPortraitHeight = 256;
-
 static bool sound_enabled = true;
 static iOSViewController *gameViewController = NULL;
 static int audioBufferMax = 8192;
@@ -147,7 +133,6 @@ static void updateAudio(int size) {
 
     _rtb = [RTB instance];
 
-    [self initScreen];
     [self initAudio];
 
     gameViewController = self;
@@ -168,48 +153,6 @@ static void updateAudio(int size) {
 
 - (void)initAudio {
     rtAudioInitWithCallback(iOSRenderCallback, 0.015);
-}
-
-- (void)initScreen {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    screenWidth = screenRect.size.width;
-    screenHeight = screenRect.size.height;
-
-    NSLog(@"screen w:%f h:%f", screenWidth, screenHeight);
-
-    CGFloat size = screenHeight;
-    if (screenWidth > screenHeight) {
-        size = screenWidth;
-    }
-
-    // TODO: Fix scaling for screen and input.
-
-    // iPhone X
-    if(size == 812) {
-        w = 1066.600000;
-        h = 1066.600000;
-    // MAX
-    } else if(size == 896) {
-        w = 1150.600000;
-        h = 1150.600000;
-    } else {
-        w = size;
-        h = size;
-        w *= screen_scaling_factor;
-        h *= screen_scaling_factor;
-    }
-
-    CGFloat visible_w = w * screen_scaling_factor_reverse;
-    CGFloat visible_h = h * screen_scaling_factor_reverse;
-
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if (UIDeviceOrientationIsPortrait(orientation)) {
-        x = (screenWidth - (visible_w * screen_16_9_width_factor)) / 2;
-        y = (screenHeight - visible_h) / 2;
-    } else {
-        x = (screenWidth - visible_w) / 2;
-        y = (screenHeight - (visible_h * screen_16_9_width_factor)) / 2;
-    }
 }
 
 - (void)update {
@@ -314,32 +257,23 @@ static void updateAudio(int size) {
 
 - (CGPoint)translateCoordinates:(CGPoint)pt {
 
-    int t_16_9 = w * screen_16_9_width_factor;
+    int physical_center_x = [_renderer physicalWidth] / 2;
+    int physical_center_y = [_renderer physicalHeight] / 2;
 
-    pt.x -= x;
-    pt.y -= y;
+    int physical_touch_x = pt.x * [_renderer mainScreenScale];
+    int physical_touch_y = pt.y * [_renderer mainScreenScale];
 
-    pt.x = pt.x/t_16_9;
-    pt.y = pt.y/h;
+    int physical_touch_offset_x = physical_touch_x - physical_center_x;
+    int physical_touch_offset_y = physical_touch_y - physical_center_y;
 
-    int t_x = floor(pt.x * (visibleTexPortraitWidth * screen_scaling_factor));
-    int t_y = floor(pt.y * (visibleTexPortraitHeight * screen_scaling_factor));
+    // apply to canvas
+    int canvas_center_x = ([_renderer scaling] * 256) / 2;
+    int canvas_center_y = ([_renderer scaling] * 256) / 2;
 
-    if (t_x < 0) {
-        t_x = 0;
-    }
+    int t_x = (canvas_center_x + physical_touch_offset_x) / [_renderer scaling];
+    int t_y = (canvas_center_y + physical_touch_offset_y) / [_renderer scaling];
 
-    if (t_x >= visibleTexPortraitWidth) {
-        t_x = visibleTexPortraitWidth - 1;
-    }
-
-    if (t_y < 0) {
-        t_y = 0;
-    }
-
-    if (t_y >= visibleTexPortraitHeight) {
-        t_y = visibleTexPortraitHeight - 1;
-    }
+    NSLog(@"x:%d y:%d", t_x, t_y);
 
     return CGPointMake(t_x, t_y);
 }
@@ -353,6 +287,7 @@ static void updateAudio(int size) {
 - (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     for (UITouch *touch in touches) {
         CGPoint pt = [touch locationInView: [touch view]];
+        // For testing.
         if (pt.y < 300) {
             [_renderer increaseScaling];
         } else {
@@ -360,7 +295,6 @@ static void updateAudio(int size) {
         }
     }
 }
-
 
 - (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
     for (UITouch *touch in touches) {

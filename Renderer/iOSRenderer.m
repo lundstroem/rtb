@@ -43,8 +43,31 @@
 static unsigned int *pixels = NULL;
 static int width = 256;
 static int height = 256;
-//static float scaling = 5.3f;
 static float scaling = 1.0f;
+static float rawScaling = 1.0f;
+static float physicalWidth = 1.0f;
+static float physicalHeight = 1.0f;
+static float mainScreenScale = 1.0f;
+
+- (float)physicalWidth {
+    return physicalWidth;
+}
+
+- (float)physicalHeight {
+    return physicalHeight;
+}
+
+- (float)mainScreenScale {
+    return mainScreenScale;
+}
+
+- (float)scaling {
+    return scaling;
+}
+
+- (float)rawScaling {
+    return rawScaling;
+}
 
 - (void *)pixels {
     return pixels;
@@ -61,6 +84,7 @@ static float scaling = 1.0f;
 }
 
 - (void)setupScaling {
+
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
@@ -70,67 +94,35 @@ static float scaling = 1.0f;
         size = screenWidth;
     }
 
+    // TODO: Depending on the ratio, either width or height must be used to get a scaling.
+    // width can not be used for iPad as the full width means that top and bottom will be clipped.
+
     NSLog(@"size %f", size);
 
     NSUInteger scale = UIScreen.mainScreen.scale;
     CGSize screenSize = UIScreen.mainScreen.fixedCoordinateSpace.bounds.size;
     NSLog(@"w:%f h:%f scale:%lu", screenSize.width, screenSize.height, (unsigned long)scale);
 
-    CGFloat physicalWidth = screenSize.width * scale;
+    CGFloat physicalWidthValue = screenSize.width * scale;
+    CGFloat physicalHeightValue = screenSize.height * scale;
 
-    CGFloat rawScaling = physicalWidth / 256.0;
-
-    CGFloat decimals = fmodf(rawScaling, 1.0);
+    CGFloat rawScalingValue = physicalWidthValue / 144.0;
+    CGFloat decimals = fmodf(rawScalingValue, 1.0);
 
     // TODO: Determine which devices give incorrect physical size when using screenWidth * scale and hardcode those.
 
     // Make uniform virtual pixel sizes.
     if (decimals > 0.90) {
         // It's ok to round up in this case as we won't lose "too" much of the screen.
-        scaling = ceil(rawScaling);
+        scaling = ceil(rawScalingValue);
     } else {
-        scaling = floor(rawScaling);
+        scaling = floor(rawScalingValue);
     }
 
-    // Would it make sense to rewrite touch to use the same system? Would make if less prone to differences hopefully.
-    // If using less pixelsize (rounding down) touch conversion could use this as well by sizing down 256 to the correct size. (4,60546875 == 256, 4.0 == 235.8) and set offsets on start and end to center it. Would need to convert touch to physical width grid etc.
-
-    // iPhone 15 2556 × 1179
-
-
-/*
-
-    // pixel size
-    1179 / 256 = 4,60546875
-
-    4 * 256 = 1024;
-
- */
-    //scaling = 3*2;
-
-
-    /*
-
-     if we can get the physical width of the device, we will be able to
-     make a scaling with correct pixel sizes.
-     However using screenWidth * sizetype might give the wrong value..
-
-     */
-
-    /*
-    // iPhone X
-    if(size == 812) {
-        scaling = 7.936213f;
-    // MAX
-    } else if (size == 896) {
-        scaling = 8.704093f;
-    // SE
-    } else if (size == 568) {
-        scaling = 4.546494f;
-    } else {
-        scaling = 5.3f;
-    }
-    */
+    rawScaling = rawScalingValue;
+    mainScreenScale = scale;
+    physicalWidth = physicalWidthValue;
+    physicalHeight = physicalHeightValue;
 }
 
 - (id<MTLTexture>)createTexture {
