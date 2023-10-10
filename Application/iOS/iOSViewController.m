@@ -257,23 +257,25 @@ static void updateAudio(int size) {
 
 - (CGPoint)translateCoordinates:(CGPoint)pt {
 
+    // physical pixel center
     int physical_center_x = [_renderer physicalWidth] / 2;
     int physical_center_y = [_renderer physicalHeight] / 2;
 
+    // touch in physical pixel coordinates
     int physical_touch_x = pt.x * [_renderer mainScreenScale];
     int physical_touch_y = pt.y * [_renderer mainScreenScale];
 
+    // physical pixels touch diff
     int physical_touch_offset_x = physical_touch_x - physical_center_x;
     int physical_touch_offset_y = physical_touch_y - physical_center_y;
 
-    // apply to canvas
+    // canvas center
     int canvas_center_x = ([_renderer scaling] * 256) / 2;
     int canvas_center_y = ([_renderer scaling] * 256) / 2;
 
+    // scale vector from screen center to canvas coordinates
     int t_x = (canvas_center_x + physical_touch_offset_x) / [_renderer scaling];
     int t_y = (canvas_center_y + physical_touch_offset_y) / [_renderer scaling];
-
-    NSLog(@"x:%d y:%d", t_x, t_y);
 
     return CGPointMake(t_x, t_y);
 }

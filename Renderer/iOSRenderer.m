@@ -89,31 +89,36 @@ static float mainScreenScale = 1.0f;
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
 
-    CGFloat size = screenHeight;
-    if (screenWidth > screenHeight) {
-        size = screenWidth;
-    }
-
-    // TODO: Depending on the ratio, either width or height must be used to get a scaling.
-    // width can not be used for iPad as the full width means that top and bottom will be clipped.
-
-    NSLog(@"size %f", size);
-
     NSUInteger scale = UIScreen.mainScreen.scale;
-    CGSize screenSize = UIScreen.mainScreen.fixedCoordinateSpace.bounds.size;
-    NSLog(@"w:%f h:%f scale:%lu", screenSize.width, screenSize.height, (unsigned long)scale);
 
-    CGFloat physicalWidthValue = screenSize.width * scale;
-    CGFloat physicalHeightValue = screenSize.height * scale;
+    CGFloat physicalWidthValue = screenWidth * scale;
+    CGFloat physicalHeightValue = screenHeight * scale;
+    CGFloat rawScalingValue = 0;
+    CGFloat decimals = 0;
 
-    CGFloat rawScalingValue = physicalWidthValue / 144.0;
-    CGFloat decimals = fmodf(rawScalingValue, 1.0);
-
-    // TODO: Determine which devices give incorrect physical size when using screenWidth * scale and hardcode those.
+    // portrait
+    if (physicalHeightValue > physicalWidthValue) {
+        if (physicalWidthValue / physicalHeightValue > 0.5625) {
+            rawScalingValue = physicalHeightValue / 256.0;
+            decimals = fmodf(rawScalingValue, 1.0);
+        } else {
+            rawScalingValue = physicalWidthValue / 144.0;
+            decimals = fmodf(rawScalingValue, 1.0);
+        }
+    // landscape
+    } else {
+        if (physicalHeightValue / physicalWidthValue > 0.5625) {
+            rawScalingValue = physicalWidthValue / 256.0;
+            decimals = fmodf(rawScalingValue, 1.0);
+        } else {
+            rawScalingValue = physicalHeightValue / 144.0;
+            decimals = fmodf(rawScalingValue, 1.0);
+        }
+    }
 
     // Make uniform virtual pixel sizes.
     if (decimals > 0.90) {
-        // It's ok to round up in this case as we won't lose "too" much of the screen.
+        // It's ok to round up in this case as we won't lose "too" much of the area outside of 144x256.
         scaling = ceil(rawScalingValue);
     } else {
         scaling = floor(rawScalingValue);
