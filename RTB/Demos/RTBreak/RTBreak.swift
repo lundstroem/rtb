@@ -28,9 +28,6 @@ import Foundation
 
 public class RTBreak: RTB {
 
-    var seq = RTBSequencer()
-    var sfxSeq = RTBSequencer()
-
     private var blockEntities: [RTBEntity] = []
     private var ballEntity = RTBEntity(type: .ball, x: 100, y: 170)
     private var padelEntity = RTBEntity(type: .padel, x: 150, y: 200)
@@ -43,12 +40,6 @@ public class RTBreak: RTB {
 
     override func setup() {
         super.setup()
-        
-        let sfxChannel = RTBChannel()
-        sfxChannel.notes = [RTBNote(40), RTBNote(30), RTBNote(28)]
-        sfxChannel.beat = [32]
-        sfxSeq.channels.append(sfxChannel)
-        RTBSequencer.sequencers.append(sfxSeq)
 
         for x in 0...5 {
             for y in 0...5 {
@@ -58,7 +49,7 @@ public class RTBreak: RTB {
     }
 
     override func updateAudio(bufferSize: Int) {
-        advanceSequencers(bufferSize: bufferSize)
+        super.updateAudio(bufferSize: bufferSize)
     }
 
     override func update(touches: [RTBTouch]?) {
@@ -117,8 +108,10 @@ public class RTBreak: RTB {
             if entity.intersects(ballEntity) {
                 entity.setHit(ballEntity)
                 ballEntity.setHit(entity)
-                // TODO: Sounds like effects is not retriggered on hit. Investigate.
-                sfxSeq.play()
+
+                playSfx(note: 60, wave: .noise, speed: 1000)
+                playSfx(note: 40, wave: .sine, speed: 20, pitchBend: 4)
+                //playSfx(note: 40, wave: .sine, speed: 10, vibratoDepth: 10, vibratoSpeed: 10)
             }
             renderEntity(entity)
         }
@@ -135,8 +128,8 @@ public class RTBreak: RTB {
             entity.hit = false
         }
 
-        let randomInt = 0xffff00ff
-        let randomInt2 = 0xffffff00
+        //let randomInt = 0xffff00ff
+        //let randomInt2 = 0xffffff00
 
         //for n in 0..<pixelCount {
 

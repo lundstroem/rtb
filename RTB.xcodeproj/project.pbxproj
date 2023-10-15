@@ -35,8 +35,8 @@
 		037F65AA2402AEE1000CC996 /* RTBDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F659C2402AEE1000CC996 /* RTBDemo3.swift */; };
 		03A338FB243721D4005F519F /* RTBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A338FA243721D4005F519F /* RTBreak.swift */; };
 		03A338FC243721D4005F519F /* RTBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A338FA243721D4005F519F /* RTBreak.swift */; };
-		03AD4E3C240E816E006A1312 /* RTB+Synth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD4E3B240E816E006A1312 /* RTB+Synth.swift */; };
-		03AD4E3D240E816E006A1312 /* RTB+Synth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD4E3B240E816E006A1312 /* RTB+Synth.swift */; };
+		03AD4E3C240E816E006A1312 /* RTBNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD4E3B240E816E006A1312 /* RTBNote.swift */; };
+		03AD4E3D240E816E006A1312 /* RTBNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD4E3B240E816E006A1312 /* RTBNote.swift */; };
 		3ABBE2791F7319890080C72C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABBE2761F7319760080C72C /* MetalKit.framework */; };
 		3ABBE27C1F7319950080C72C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABBE2771F7319760080C72C /* MetalKit.framework */; };
 		3AF7EA0A1EB64A46003BB06D /* MacRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF7E9BF1EB64A46003BB06D /* MacRenderer.m */; };
@@ -78,7 +78,7 @@
 		037F659B2402AEE1000CC996 /* RTBDemo2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo2.swift; sourceTree = "<group>"; };
 		037F659C2402AEE1000CC996 /* RTBDemo3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTBDemo3.swift; sourceTree = "<group>"; };
 		03A338FA243721D4005F519F /* RTBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBreak.swift; sourceTree = "<group>"; };
-		03AD4E3B240E816E006A1312 /* RTB+Synth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RTB+Synth.swift"; sourceTree = "<group>"; };
+		03AD4E3B240E816E006A1312 /* RTBNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTBNote.swift; sourceTree = "<group>"; };
 		3A93731A1EBB8C17007D505D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3ABBE2761F7319760080C72C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
 		3ABBE2771F7319760080C72C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -166,7 +166,7 @@
 		037EF1872434C94A00902E9C /* RTBSynth */ = {
 			isa = PBXGroup;
 			children = (
-				03AD4E3B240E816E006A1312 /* RTB+Synth.swift */,
+				03AD4E3B240E816E006A1312 /* RTBNote.swift */,
 				037EF1882434C97300902E9C /* RTBOscillator.swift */,
 				037EF18B2434CA3300902E9C /* RTBChannel.swift */,
 				037EF18E2434CA8000902E9C /* RTBEffects.swift */,
@@ -391,7 +391,7 @@
 				030D30C1243B7FC4007FDAD5 /* RTBEntity.swift in Sources */,
 				037EF18D2434CA3300902E9C /* RTBChannel.swift in Sources */,
 				037F65A12402AEE1000CC996 /* RTBDemo4.swift in Sources */,
-				03AD4E3D240E816E006A1312 /* RTB+Synth.swift in Sources */,
+				03AD4E3D240E816E006A1312 /* RTBNote.swift in Sources */,
 				037F65A42402AEE1000CC996 /* RTBDemo1.swift in Sources */,
 				03A338FC243721D4005F519F /* RTBreak.swift in Sources */,
 				037EF1902434CA8000902E9C /* RTBEffects.swift in Sources */,
@@ -419,7 +419,7 @@
 				037EF1892434C97300902E9C /* RTBOscillator.swift in Sources */,
 				030D30C0243B7FC4007FDAD5 /* RTBEntity.swift in Sources */,
 				037EF18C2434CA3300902E9C /* RTBChannel.swift in Sources */,
-				03AD4E3C240E816E006A1312 /* RTB+Synth.swift in Sources */,
+				03AD4E3C240E816E006A1312 /* RTBNote.swift in Sources */,
 				037F65A02402AEE1000CC996 /* RTBDemo4.swift in Sources */,
 				037F65A32402AEE1000CC996 /* RTBDemo1.swift in Sources */,
 				030197AD240D4B6C0071B955 /* RTB+Label.swift in Sources */,

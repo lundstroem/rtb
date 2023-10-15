@@ -29,26 +29,79 @@ import Foundation
 public class RTBChannel {
     var channelBuffer: [Int16] = Array(repeating: 0, count: 4096)
     var notes: [RTBNote] = []
-    var beat: [Double] = []
     let osc = RTBOscillator()
     let vibratoEffect = RTBVibratoEffect()
     let lowpassEffect = RTBFilterEffect()
     let pitchEffect = RTBPitchEffect()
-    var beatCursor: Int = 0
     var sampleCursor: Double = 0
-    var active = false
+    var active = true
     var amplitude = 0.5
     let effectTickLimit = 64
     var effectTickCounter = 0
-    var currentNote: Double = 0
     var started = false
 
-    public func advanceChannel(bufferSize: Int, bpm: Double, loop: Bool) {
+    init() {
+        // fill pool of notes
+        for _ in 0..<16 {
+            notes.append(RTBNote())
+        }
+    }
+
+    func playSfx(noteValue: Double,
+                 wave: RTBOscillator.WaveType,
+                 speed: Double = 60,
+                 pitchBend: Double,
+                 vibratoDepth: Double,
+                 vibratoSpeed: Double,
+                 clearQueue: Bool = false) {
+        
+        if clearQueue {
+           inactivateNotes()
+        }
+
+        for note in notes {
+            if !note.active {
+                note.active = true
+                note.note = noteValue
+                note.bpm = speed
+                note.waveType = wave
+
+                if pitchBend != 0 {
+                    note.pitchEffectDepth = pitchBend
+                }
+
+                if vibratoSpeed != 0 && vibratoDepth != 0 {
+                    note.vibratoEffectSpeed = vibratoSpeed
+                    note.vibratoEffectDepth = vibratoDepth
+                }
+
+                // TODO: Reset all params when setting..
+
+                active = true
+                return
+            }
+        }
+    }
+
+    private func inactivateNotes() {
+        for note in notes {
+            note.active = false
+        }
+    }
+
+    public func reset() {
+        inactivateNotes()
+        started = false
+        sampleCursor = 0
+    }
+
+    public func advanceChannel(bufferSize: Int) {
         for n in 0..<bufferSize {
             channelBuffer[n] = 0
         }
+
         for n in stride(from: 0, to: bufferSize, by: 2) {
-            let sample = increment(bufferSize: 2, bpm: bpm, loop: loop)
+            let sample = increment(bufferSize: 2)
             guard
                 channelBuffer[n]+sample < INT16_MAX &&
                     channelBuffer[n]+sample > INT16_MIN &&
@@ -58,58 +111,73 @@ public class RTBChannel {
             channelBuffer[n] += sample
             channelBuffer[n+1] += sample
         }
-        if vibratoEffect.active() {
+
+        if lowpassEffect.active() {
             filterLowpass(bufferSize: bufferSize)
         }
     }
 
-    private func increment(bufferSize: Int, bpm: Double, loop: Bool) -> Int16 {
-        guard notes.count > 0, active else { return Int16(0) }
+    private func increment(bufferSize: Int) -> Int16 {
+
+        guard active else {
+            return 0
+        }
+
         if !started {
-            activateNote(0)
-            started = true
-        }
-        let currentSampleCursor = Int(sampleCursor)
-        var currentBeat: Double = 1
-        if beatCursor < beat.count {
-            currentBeat = beat[beatCursor]
-        }
-        let sampleTimeMod = (bpm / ((RTBOscillator.sampleRate * 2) * 60.0) * Double(bufferSize)) * currentBeat
-        sampleCursor += sampleTimeMod
-        if Int(sampleCursor) > currentSampleCursor {
-            beatCursor += 1
-            if beatCursor >= beat.count {
-                beatCursor = 0
-            }
-            let newSampleCursor = Int(sampleCursor)
-            if newSampleCursor < notes.count {
-                activateNote(newSampleCursor)
-            } else {
-                if !loop {
-                    active = false
-                }
-                sampleCursor = 0
+            sampleCursor = 0
+            if notes[0].active {
                 activateNote(0)
+                started = true
             }
         }
 
-        applyEffects()
+        let currentSampleCursor = Int(sampleCursor)
+        let currentNote = notes[currentSampleCursor]
+
+        let time: Double = ((RTBOscillator.sampleRate * 2) * 60.0) * Double(bufferSize)
+
+        // TODO: Use milliseconds for speed/bpm param.
+        let sampleTimeMod: Double = (currentNote.bpm * 100) / time
+
+        sampleCursor += sampleTimeMod
+        if Int(sampleCursor) > currentSampleCursor {
+            let newSampleCursor = Int(sampleCursor)
+            if newSampleCursor < notes.count && notes[newSampleCursor].active {
+                activateNote(newSampleCursor)
+            } else {
+
+                // TODO: Handle amplitude and phase transitions to avoid clicks and pops.
+
+                inactivateNotes()
+                sampleCursor = 0
+                started = false
+                active = false
+                amplitude = 0
+                resetEffects()
+            }
+        }
+
+        applyEffects(index: Int(sampleCursor))
 
         return osc.incrementOsc(amplitude)
     }
 
-    private func applyEffects() {
+    private func applyEffects(index: Int) {
+        guard index < notes.count else { return }
+
         effectTickCounter += 1
         if effectTickCounter >= effectTickLimit {
             effectTickCounter = 0
-            var note: Double = currentNote
-            if pitchEffect.active() {
-                note = pitchEffect.modifiedNote(note: note)
+            if notes[index].active {
+                var note = notes[index].note
+                if pitchEffect.active() {
+                    note = pitchEffect.modifiedNote(note: note)
+                }
+                if vibratoEffect.active() {
+                    note = vibratoEffect.modifiedNote(note: note)
+                }
+                osc.pitch = note
             }
-            if vibratoEffect.active() {
-                note = vibratoEffect.modifiedNote(note: note)
-            }
-            osc.tone = note
         }
     }
 }
@@ -127,28 +195,20 @@ extension RTBChannel {
     private func activateNote(_ index: Int) {
         resetEffects()
         if index < notes.count {
-            currentNote = notes[index].note
-            osc.tone = notes[index].note
+
+            amplitude = 0.5
+            osc.pitch = notes[index].note
             osc.setWaveType(waveType: notes[index].waveType)
-            for effectParam in notes[index].effects{
-                switch effectParam.type {
-                case .vibrato:
-                    vibratoEffect.isActive = true
-                    vibratoEffect.vibratoSpeed = effectParam.param1
-                    vibratoEffect.vibratoDepth = effectParam.param2
-                case .lowpass:
-                    lowpassEffect.isActive = true
-                    lowpassEffect.amountLeft = effectParam.param1
-                    lowpassEffect.amountRight = effectParam.param2
-                    break
-                case .pitch:
-                    pitchEffect.isActive = true
-                    pitchEffect.setIncrement(value: effectParam.param1)
-                    break
-                case .unknown:
-                    break
-                }
+            if notes[index].pitchEffectDepth != 0 {
+                pitchEffect.isActive = true
+                pitchEffect.setIncrement(value: notes[index].pitchEffectDepth)
             }
+            if notes[index].vibratoEffectDepth != 0 && notes[index].vibratoEffectSpeed != 0 {
+                vibratoEffect.isActive = true
+                vibratoEffect.vibratoDepth = notes[index].vibratoEffectDepth
+                vibratoEffect.vibratoSpeed = notes[index].vibratoEffectSpeed
+            }
+            // TODO: Handle lowpass.
         }
     }
 }

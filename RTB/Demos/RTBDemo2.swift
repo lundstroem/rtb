@@ -36,18 +36,12 @@ class RTBDemo2: RTB {
     var color: UInt32 = 0xff00ffff
     var bgColor: UInt32 = 0x003300ff
 
-    var sfxSeq = RTBSequencer()
-
     override func setup() {
-        let sfxChannel = RTBChannel()
-        sfxChannel.notes = [RTBNote(40), RTBNote(30), RTBNote(28)]
-        sfxChannel.beat = [16]
-        sfxSeq.channels.append(sfxChannel)
-        RTBSequencer.sequencers.append(sfxSeq)
+        super.setup()
     }
 
     override func updateAudio(bufferSize: Int) {
-        advanceSequencers(bufferSize: bufferSize)
+        super.updateAudio(bufferSize: bufferSize)
     }
 
     override func update(touches: [RTBTouch]?) {
@@ -55,25 +49,30 @@ class RTBDemo2: RTB {
         y += yV
         if x > Double(RTB.width)-72 {
             xV = -xV
-            sfxSeq.play()
+            playBounceSfx()
             color = UInt32(Int.random(in: 1..<4294967295))
         }
         if y > Double(RTB.height)-8 {
             yV = -yV
-            sfxSeq.play()
+            playBounceSfx()
             bgColor = UInt32(Int.random(in: 1..<4294967295))
         }
         if x < 0 {
             xV = -xV
-            sfxSeq.play()
+            playBounceSfx()
             color = UInt32(Int.random(in: 1..<4294967295))
         }
         if y < 0 {
             yV = -yV
-            sfxSeq.play()
+            playBounceSfx()
             bgColor = UInt32(Int.random(in: 1..<4294967295))
         }
         printLabel(x: Int(x), y: Int(y), string: "hello RTB", color: color, bgColor: bgColor)
+    }
+
+    private func playBounceSfx() {
+        playSfx(note: 3, wave: .tri, speed: 100)
+        playSfx(note: 40, wave: .tri, speed: 30, pitchBend: 7)
     }
 }
 

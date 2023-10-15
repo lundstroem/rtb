@@ -24,28 +24,19 @@ SOFTWARE.
 
 */
 
-class RTBDemo3: RTB {
+public class RTBNote {
 
-    override func setup() {
-    }
+    var active: Bool = false
+    var note: Double = 0.0
+    var amp: Double = 1
+    var bpm: Double = 60
+    var waveType: RTBOscillator.WaveType = .sine
+    var pitchEffectDepth: Double = 0
+    var vibratoEffectSpeed: Double = 0
+    var vibratoEffectDepth: Double = 0
 
-    override func updateAudio(bufferSize: Int) {
-        super.updateAudio(bufferSize: bufferSize)
-    }
-
-    override func update(touches: [RTBTouch]?) {
-
-        printLabel(x: RTB.offset, y: 0, string: "hello", color: 0xff00ffff, bgColor: 0x003300ff)
-        printLabel(x: RTB.offset, y: 9, string: "second line", color: 0xff00ffff, bgColor: 0x003300ff)
-        printLabel(x: RTB.offset, y: 18, string: "Long String 123#", color: 0xff00ffff, bgColor: 0x003300ff)
-        printLabel(x: RTB.offset, y: 27, string: "827367678256", color: 0xff00ffff, bgColor: 0x003300ff)
-
-        if let touches = touches {
-            for touch in touches {
-                if touch.active {
-                    drawPixel(x: touch.x, y: touch.y, color: 0xffffffff)
-                }
-            }
-        }
+    init(_ note: Double = 0.0, waveType: RTBOscillator.WaveType = .sine) {
+        self.note = note
+        self.waveType = waveType
     }
 }

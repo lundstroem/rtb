@@ -37,6 +37,12 @@ public class RTBEffectParam {
     var type: RTBEffectParamType = .unknown
     var param1: Double = 0
     var param2: Double = 0
+
+    init(type: RTBEffectParamType, param1: Double, param2: Double) {
+        self.type = type
+        self.param1 = param1
+        self.param2 = param2
+    }
 }
 
 public protocol RTBEffectProtocol {
@@ -63,10 +69,8 @@ public class RTBVibratoEffect: RTBEffectProtocol {
         }
 
         let depth = vibratoDepthMod * vibratoDepth
-        var phaseInt = Int(vibratoPhase)
-        if phaseInt >= 1024 || phaseInt < 0 {
-            phaseInt = 0
-        }
+        let phaseInt = Int(vibratoPhase)
+
         let mod = Double(sineTable[phaseInt]) * depth
         return note + mod
     }
@@ -104,7 +108,7 @@ public class RTBPitchEffect: RTBEffectProtocol {
 
     var isActive = false
     private var increment: Double = 0
-    private let pitchModifier = 0.001
+    private let pitchModifier = 0.1
     private var baseValue = 0.0
 
     func setIncrement(value: Double) {
@@ -121,6 +125,7 @@ public class RTBPitchEffect: RTBEffectProtocol {
     }
 
     public func reset() {
+        increment = 0
         baseValue = 0
         isActive = false
     }

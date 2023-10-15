@@ -56,10 +56,12 @@ protocol RTBProtocol {
                                                                    alignment: MemoryLayout<Int16>.alignment)
     @objc static var instance: RTB = {
         //let instance = RTBreak()
-        let instance = RTBDemo4()
+        let instance = RTBDemo2()
         instance.setup()
         return instance
     }()
+
+    private var audioChannel: RTBChannel = RTBChannel()
 
     /// Run at the start of the program.
     func setup() {
@@ -72,6 +74,22 @@ protocol RTBProtocol {
         for n in 0..<8192 {
             bytesPointer.advanced(by: n*2).copyMemory(from: [0], byteCount: 2)
         }
+    }
+
+    func playSfx(note: Double = 40.0,
+                 wave: RTBOscillator.WaveType = .sine,
+                 speed: Double = 40,
+                 pitchBend: Double = 0,
+                 vibratoDepth: Double = 0,
+                 vibratoSpeed: Double = 0,
+                 clearQueue: Bool = false) {
+        audioChannel.playSfx(noteValue: note, 
+                             wave: wave,
+                             speed: speed,
+                             pitchBend: pitchBend,
+                             vibratoDepth: vibratoDepth,
+                             vibratoSpeed: vibratoSpeed,
+                             clearQueue: clearQueue)
     }
 }
 
@@ -97,7 +115,17 @@ extension RTB {
 
     /// Updated every time the audio system needs new samples. Is run on a prioritized audio thread.
     func updateAudio(bufferSize: Int) {
-        assert(true, "should only be run in subclass")
+        guard bufferSize < audioBufferCount else { return }
+
+        let p = audioBytesPointer.assumingMemoryBound(to: Int16.self)
+        for n in 0..<bufferSize {
+            p[n] = 0
+        }
+
+        audioChannel.advanceChannel(bufferSize: bufferSize)
+        for n in 0..<bufferSize {
+            p[n] &+= audioChannel.channelBuffer[n]
+        }
     }
 
     /// Updated every time the screen is to be redrawn, target 60fps.

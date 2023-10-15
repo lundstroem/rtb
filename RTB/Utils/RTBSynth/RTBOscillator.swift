@@ -49,6 +49,12 @@ public class RTBOscillator {
     private lazy var waveTable = sineTable
     private var waveType: WaveType = .sine
 
+    var pitch: Double = 0
+
+    private var phaseIncrement: Double = 0
+    private var currentPhase: Double = 0
+    private var currentPhaseInt: Int = 0
+
     func setWaveType(waveType: WaveType) {
         self.waveType = waveType
         switch waveType {
@@ -65,15 +71,24 @@ public class RTBOscillator {
         }
     }
 
-    var tone: Double = 50
-
-    private var phaseIncrement: Double = 0
-    private var currentPhase: Double = 0
-    private var currentPhaseInt: Int = 0
+    func reset() {
+        pitch = 0
+        phaseIncrement = 0
+        currentPhase = 0
+        currentPhaseInt = 0
+    }
 
     func incrementOsc(_ amplitude: Double) -> Int16 {
         let waveformLength = Double(waveTable.count)
-        let delta = frequency(pitch: tone) / RTBOscillator.sampleRate * waveformLength
+
+        var delta: Double = 0
+
+        if waveType == .noise {
+            delta = (frequency(pitch: pitch) * frequency(pitch: pitch)) / 22000
+        } else {
+            delta = frequency(pitch: pitch) / RTBOscillator.sampleRate * waveformLength
+        }
+
         currentPhase += delta;
         if currentPhase >= Double(INT_MAX) {
             currentPhase = 0
